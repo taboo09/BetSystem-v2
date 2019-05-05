@@ -1,0 +1,171 @@
+<spinner2 *ngIf="!bets"></spinner2>
+
+<div class="main" *ngIf="bets">
+  <div class="d-inline">
+    <mat-radio-group [(ngModel)]="selectedValue">
+      <mat-radio-button value="all" (click)="displayAll()">All Bets</mat-radio-button>
+      <mat-radio-button value="last15" (click)="last15()">Last 15</mat-radio-button>
+      <mat-radio-button value="date" (click)="lastDate()">Last Date</mat-radio-button>
+      <mat-radio-button value="unsettled" (click)="unsettled()">Unsettled</mat-radio-button>
+    </mat-radio-group>
+    <mat-checkbox class="float-right" (click)="enableDelete()">Delete Bet</mat-checkbox>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z12 table-hover">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> No </th>
+      <td mat-cell *matCellDef="let bet; let i = index"> {{ [i + 1] }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="team">
+      <th mat-header-cell *matHeaderCellDef> Team </th>
+      <td mat-cell *matCellDef="let bet">
+        <button class="btn btn-link px-0 btn-team" (click)="displayBetsById(bet.teamId)"> {{ bet.team }} </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let bet">{{ bet.date | date }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="match">
+      <th mat-header-cell *matHeaderCellDef>Match</th>
+      <td mat-cell *matCellDef="let bet ">{{ bet.home }} - {{ bet.away }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="odd">
+      <th mat-header-cell *matHeaderCellDef> Odd </th>
+      <td mat-cell *matCellDef="let bet"> {{ bet.odd }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="stake">
+      <th mat-header-cell *matHeaderCellDef> Stake </th>
+      <td mat-cell *matCellDef="let bet"> {{ bet.stake | currency: currency.symbol:'code':'1.0-2' }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef> Total </th>
+      <td mat-cell *matCellDef="let bet"> {{ bet.cashReturn | currency: currency.symbol:'code':'1.0-2' }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="won">
+      <th mat-header-cell *matHeaderCellDef> Won </th>
+      <td mat-cell *matCellDef="let bet">
+        <!-- <i class="far fa-smile" *ngIf="bet.won == true" style="color: orange"></i>
+        <i class="far fa-frown" *ngIf="bet.won == false"></i> -->
+        <span *ngIf="bet.won == true" style="color: orange">Yes</span>
+        <span *ngIf="bet.won == false">No</span>
+        <span *ngIf="bet.won == null">
+          <button class="btn btn-link px-0 pb-0" matTooltip="Edit Bet!" (click)="openBetDialog(betmodal, bet, 'edit');">
+            <i class="far fa-edit"></i>
+          </button>
+        </span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cash_out">
+      <th mat-header-cell *matHeaderCellDef>CashOut</th>
+      <td mat-cell *matCellDef="let bet"> {{ bet.withdrawal | currency: currency.symbol:'code':'1.0-2' }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="return">
+      <th mat-header-cell *matHeaderCellDef>Return 
+        <button class="btn btn-link px-0" matTooltip="Sort Descending" (click)="sortDesc()">
+          <i class="fa fa-arrow-circle-down" ></i>
+        </button>
+        </th>
+      <td mat-cell *matCellDef="let bet"> {{ bet.profit | currency: currency.symbol:'code':'1.0-2' }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> </th>
+      <td mat-cell *matCellDef="let bet"> 
+        <button class="btn btn-link" (click)="openBetDialog(betmodal, bet, 'delete');">
+        <i class="fas fa-trash-alt"></i>
+      </button> 
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>
+
+<div class="container text-center mt-5" *ngIf="initialBets && initialBets.length == 0">
+  <h4>There are no bets to be displayed.</h4>
+  <h5>Go to <a href="#" [routerLink]="['/new-bet']" class="btn-outline-primary btn-sm btn mx-3">Add Bet</a> page to add bets.</h5>
+</div>
+
+<!-- bet modal for editing and deleting-->
+<ng-template #betmodal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title ml-3" *ngIf="state === 'delete'">Delete Bet:</h5>
+      <h5 class="modal-title ml-3" *ngIf="state === 'edit'">Edit Bet:</h5>
+    </div>
+    <div class="container">
+      <hr>
+      <div class="modal-body" *ngIf="bet">
+        <form [formGroup]="editForm">
+          <table class="table table-sm" cellspacing="0" cellpadding="0">
+            <tr>
+              <th>Id</th>
+              <td><span>{{ bet.id }}</span></td>
+            </tr>
+            <tr>
+              <th>Team</th>
+              <td><span>{{ bet.team }}</span></td>
+            </tr>
+            <tr>
+              <th>Match</th>
+              <td><span>{{ bet.home }} - {{ bet.away }}</span></td>
+            </tr>
+            <tr>
+              <th>Date</th>
+              <td><span>{{ bet.date | date }}</span></td>
+            </tr>
+            <tr>
+              <th>Return</th>
+              <td><span>{{ bet.cashReturn | currency: currency.symbol:'code':'1.0-2' }}</span></td>
+            </tr>
+            <tr *ngIf="state === 'edit'">
+              <th>Won</th>
+              <td>
+                <div class="form-group">
+                  <div class="btn-group" btnRadioGroup>
+                    <label class="btn btn-secondary px-4 w-50" btnRadio="true">
+                      <input type="radio" id="won" formControlName="won" value="true" hidden> Yes
+                    </label>
+                    <label class="btn btn-secondary px-4 w-50" btnRadio="false">
+                      <input type="radio" id="won" formControlName="won" value="false" hidden> No
+                    </label>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="state === 'edit'">
+              <th>Withdrawal</th>
+              <td>
+                <input type="number" formControlName="withdrawal" class="form-control" required min="0" max="99999"
+                  style="width: 136px" />
+                <small>Value is 0 if the bet is lost</small>
+                <span class="invalid-value" *ngIf="editForm.invalid">
+                  <small>{{ withDrawalValidationMessage() }}</small>
+                </span>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" mat-flat-button color="primary" (click)="modalConfirm()" *ngIf="state === 'edit'" 
+        [disabled]="!editForm.dirty || editForm.invalid">Save</button>
+      <button type="button" mat-flat-button color="primary" (click)="modalConfirm()" *ngIf="state === 'delete'">Delete</button>
+      <button type="button" mat-flat-button color="warn" (click)="modalCancel()">Cancel</button>
+    </div>
+  </div>
+</ng-template>

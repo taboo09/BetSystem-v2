@@ -1,0 +1,16 @@
+
+<spinner *ngIf="!teamsProfit"></spinner>
+<div *ngIf="teamsProfit && teamsProfit.length == 0">
+  <h5>There are no statistics to be displayed!</h5>
+  <p>If the season is <i style="color:orange">Active</i>, please add teams and bets to load statistics.</p>
+</div>
+
+<div>
+  <canvas id="teamsChart" style="width: auto; height: 550px"></canvas>
+</div>
+<div class="mt-4" *ngIf="showDatesChart">
+  <canvas id="profitChart" style="width: auto; height: 550px"></canvas>
+</div>
+<div class="mt-4" *ngIf="showDatesChart">
+  <canvas id="datesChart" style="width: auto; height: 550px"></canvas>
+</div>

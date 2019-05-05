@@ -1,0 +1,44 @@
+.form-group > *{
+    min-width: 300px;
+}
+table {
+    width: 100%;
+    background-color: transparent;
+    font-family: 'Signika', sans-serif;
+  }
+.modal-content > *, .modal-content table tr > *{
+    border:none;
+    font-weight: 400;
+}
+td {
+    color: cyan;
+    font-size: .95em;
+    text-align: center;
+}
+th{
+    text-align: center !important;
+}
+i.far, i.fas{
+    font-size: 1.2em;
+}
+.fa-calendar-times{
+    color: orangered;
+}
+.fas.fa-star{
+    color:orange;
+}
+a i.far{
+    text-decoration: none;
+}
+.error-team{
+    display: block;
+    color: orangered;
+    margin-top: -15px;
+    font-size: .85rem;
+}
+.modal-body table tbody tr:first-child td span {
+    font-size: 1.1em;
+}
+mat-expansion-panel{
+    background: transparent;
+}

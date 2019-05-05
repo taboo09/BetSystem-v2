@@ -1,0 +1,20 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<app-nav></app-nav>
+<app-jumbotron></app-jumbotron>
+<div class="container">
+    <router-outlet></router-outlet>
+</div>
+<div class="footer mt-5">
+    <hr>
+    <small class="d-block mb-2" *ngIf="credentials">
+            Logged in: 
+            <i class="fas fa-desktop ml-2"></i> {{ credentials.pc }}
+            <i class="far fa-user ml-2"></i> {{ credentials.name }}
+    </small>
+    <small>BetSystem App - {{ version }} - <i class="far fa-copyright"></i> 2019 {{year === 2019 ? '' : '- ' + year}}.
+        All rights reserved.</small>
+    <p class="mt-2">
+        <a class="px-2" href="https://github.com/taboo09"><i class="fab fa-github"></i></a>
+        <a class="px-2" href="https://www.linkedin.com/in/mariusstanciu/"><i class="fab fa-linkedin"></i></a>
+    </p>
+</div>

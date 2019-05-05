@@ -1,0 +1,23 @@
+.form-group > *{
+    min-width: 300px;
+}
+.colorBtn{
+    min-width: 100px;
+    max-width: auto;
+    margin: .2rem .2rem;
+    font-size: .9em;
+}
+.row .col:nth-child(2){
+    min-width: 250px;
+}
+.error-team{
+    display: block;
+    color: orangered;
+    margin-top: -15px;
+    font-size: .85rem;
+}
+
+.text-warn{
+    margin-bottom: 2rem;
+    color:orange;
+}

@@ -1,0 +1,111 @@
+<div class="bg-overlay-primary">
+  <img src="assets/img/soccer-content.jpg" class="img-cover">
+</div>
+
+
+
+<div class="container">
+  <h5 mat-dialog-title>
+    {{ team.name }}
+    <span class="float-right h6 font-italic">Id: {{team.id}}</span>
+  </h5>
+  <hr class="mb-4" />
+
+  <spinner *ngIf="!teamStats"></spinner>
+
+  <div mat-dialog-content>
+    <form [formGroup]="teamForm">
+      <div class="row">
+
+        <div class="col col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12" *ngIf="teamStats">
+          <div class="mat-elevation-z12 py-2">
+            <div class="form-group stars ml-4">
+              <h6 class="mb-3 mt-2">Likely to draw</h6>
+              <div [ngbTooltip]="teamStats.percentage ? teamStats.percentage + '%' : '0%'" style="width:max-content">
+                <i class="fas fa-star" *ngFor="let i of counterStarts(teamStats.stars)"></i>
+                <i class="far fa-star" *ngFor="let i of counterStarts(3 - teamStats.stars)" style="color:olivedrab"></i>
+              </div>
+            </div>
+            <div class="form-group ml-4">
+              <mat-label class="d-block my-3 h6">Active</mat-label>
+              <mat-slide-toggle class="slider" [formControl]="teamForm.get('enabled')" [color]="colorSlide"
+                [checked]="team.enabled">
+                <i class="far fa-smile ml-4" *ngIf="teamForm.get('enabled').value" style="color: orange"></i>
+                <i class="far fa-frown ml-4" *ngIf="teamForm.get('enabled').value == false" style="color:orangered"></i>
+              </mat-slide-toggle>
+            </div>
+          </div>
+        </div>
+
+        <div class="col col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12" *ngIf="teamStats">
+          <div class="form-group textarea mt-3">
+            <h6>Comment</h6>
+            <mat-form-field appearance="outline">
+              <mat-label>Comment</mat-label>
+              <textarea matInput maxlength="255" value={{team.comment}} matTextareaAutosize matAutosizeMinRows=5
+                [formControl]="teamForm.get('comment')" placeholder="This team has no comment"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="row mt-3">
+      <div class="col col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12" *ngIf="teamStats">
+        <div class="mat-elevation-z12 mt-3">
+          <table class="table text-center main">
+            <tr class="font-lg">
+              <th>Next Stake</th>
+              <td>{{ teamStats.nextStake | currency: currency.symbol:'code':'1.0-2' }}</td>
+            </tr>
+            <tr>
+              <th>Nr Bets/Won</th>
+              <td>{{ teamStats.matchesPlayed }} / {{ teamStats.matchesWon }}</td>
+            </tr>
+            <tr>
+              <th>Won Rate</th>
+              <td>{{ teamStats.percentage }} %</td>
+            </tr>
+            <tr>
+              <th>See Bets</th>
+              <td>
+                <button class="btn btn-sm btn-outline-light" [mat-dialog-close] [routerLink]="['/bets/',team.id]"
+                  [disabled]="teamStats.matchesPlayed == 0">Go to Bets</button>
+              </td>
+            </tr>
+            <tr>
+              <th>Total Bet</th>
+              <td>
+                <table class="table-sm text-center mx-auto">
+                  <tr>
+                    <td>Total Bet</td>
+                    <td>Total Earn</td>
+                  </tr>
+                  <tr>
+                    <td>{{ teamStats.moneyBet | currency: currency.symbol:'code':'1.0-2' }}</td>
+                    <td>{{ teamStats.moneyEarn | currency: currency.symbol:'code':'1.0-2' }}</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr class="font-lg">
+              <th>Total Profit</th>
+              <td>{{ teamStats.profit | currency: currency.symbol:'code':'1.0-2' }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="col col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12 pt-5">
+        <div class="chart-team">
+          <canvas id="teamChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div mat-dialog-actions class="float-right mt-3">
+    <button mat-flat-button class="mr-3" [mat-dialog-close] [disabled]="!teamForm.dirty"
+      (click)="saveTeam()">Save</button>
+    <button mat-flat-button color="warn" (click)="onNoClick()">Close</button>
+  </div>
+</div>

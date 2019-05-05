@@ -1,0 +1,56 @@
+table {
+    width: 100%;
+    background-color: transparent;
+    font-family: 'Signika', sans-serif;
+}
+.modal-content table, .modal-content td, .modal-content th {
+    border: none;
+    font-weight: 400;
+}
+.modal-header, .modal-footer{
+    border: none;
+}
+
+td {
+    color: lightpink;
+    font-size: .9em;
+}
+
+i{
+    font-size: 1.15rem;
+}
+.fa-trash-alt, .fa-smile, .fa-frown{
+    color: orangered;
+}
+
+.fa-edit, .fa-arrow-circle-down {
+    color: cyan;
+}
+
+div.d-inline{
+    font-size: .85rem;
+    opacity: .8;
+}
+
+.mat-radio-group .mat-radio-button{
+    margin-right: 0.95rem;
+}
+
+.modal-body{
+    padding: 5% 10%;
+}
+.modal-body table tr td span{
+    color: #ffffff;
+}
+.modal-footer button{
+    width: 92px;
+}
+
+.invalid-value small{
+    color: orangered;
+    width: 138px;
+    display: block;
+}
+.modal-content label.active{
+    background: #362e3a;
+}

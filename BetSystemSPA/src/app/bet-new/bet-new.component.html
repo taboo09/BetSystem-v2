@@ -1,0 +1,75 @@
+<div class="col col-12 text-center mt-5" *ngIf="!season">
+    <h4>No season to be found.</h4>
+    <h5>Go to <a href="#" [routerLink]="['/admin']" class="btn-outline-primary btn-sm btn mx-3">Admin</a> page to add a
+      season.</h5>
+  </div>
+
+<div class="col col-xl-4 col-lg-5 col-md-6 col-sm-12 col-xs-12 col-12 text-center" *ngIf="season">
+  <h6 class="text-warn" *ngIf="season && !season.active">
+    Bets cannot be placed because {{ season.name | uppercase }} is not active
+  </h6>
+
+  <form [formGroup]="matchForm" (ngSubmit)="AddBet()">
+    <div class="form-group">
+      <mat-form-field appearance="outline" >
+        <mat-label>{{ matchForm.get('teamId').hasError('required') && matchForm.get('teamId').touched ? 'Choose Team' : 'Team' }}</mat-label>
+        <mat-select [formControl]="matchForm.get('teamId')" required >
+          <mat-option *ngFor="let team of teams" [value]="team.id">
+            {{team.name}}
+          </mat-option>
+        </mat-select>
+        <span class="text-primary small" *ngIf="teams?.length === 0">There are no teams or all are disabled!</span>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label>Home</mat-label>
+        <input matInput [formControl]="matchForm.get('home')" maxlength="36" required placeholder="{{ !matchForm.get('home').valid && matchForm.get('home').touched ?
+        'Home team is required.' : 'Home team' }}">
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label>Away</mat-label>
+        <input matInput [formControl]="matchForm.get('away')" maxlength="36" required placeholder="{{ !matchForm.get('away').valid && matchForm.get('away').touched ?
+        'Away team is required.' : 'Away team' }}">
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="picker" [formControl]="matchForm.get('date')" required placeholder="{{ !matchForm.get('date').valid && matchForm.get('date').touched ?
+        'Date is required.' : matchForm.get('date') }}">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label>Odd</mat-label>
+        <input matInput [formControl]="matchForm.get('odd')" max="1000" required placeholder="{{ !matchForm.get('odd').valid && matchForm.get('odd').touched ?
+        'Odd is required.' : 0 }}">
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label>Stake</mat-label>
+        <input matInput [formControl]="matchForm.get('stake')" max="10000" required placeholder="{{ !matchForm.get('stake').valid && matchForm.get('stake').touched ?
+        'Stake is required.' : 0 }}">
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <div class="btns text-left">
+        <button mat-flat-button [disabled]="!matchForm.valid" type="submit">Add Bet</button>
+        <button mat-flat-button color="warn" type="button" (click)="Cancel()">Cancel</button>
+      </div>
+    </div>
+
+  </form>
+</div>

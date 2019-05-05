@@ -1,0 +1,44 @@
+<div class="container text-center mt-5" *ngIf="!season">
+  <h4>No season to be found.</h4>
+  <h5>Go to <a href="#" [routerLink]="['/admin']" class="btn-outline-primary btn-sm btn mx-3">Admin</a> page to add a
+    season.</h5>
+</div>
+
+<div class="containter" *ngIf="season">
+  <div class="row">
+    <div class="col col-md-6 col-sm-12 mb-5">
+        <h6 class="text-warn" *ngIf="season && !season?.active">Teams cannot be added because {{ season.name | uppercase }} is not active</h6>
+      <h5>Add Team</h5>
+      <form [formGroup]="teamForm" (ngSubmit)="addTeam()">
+
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Name</mat-label>
+              <input matInput [formControl]="teamForm.get('name')" maxlength="36" required
+                placeholder="{{ !teamForm.get('name').valid && teamForm.get('name').touched ?
+                'Team name is required.' : 'Team name' }}">
+            </mat-form-field>
+            <span class="error-team" *ngIf="teamForm.dirty && teamForm.hasError('error')">Error: {{errorMessage()}} </span>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Comment</mat-label>
+              <textarea matInput [formControl]="teamForm.get('comment')" maxlength="360" placeholder="Comment"></textarea>
+            </mat-form-field>
+          </div>
+
+          <button mat-flat-button [disabled]="!teamForm.valid" type="submit">Add Team</button>
+      </form>
+
+    </div>
+    <div class="col col-md-6 col-sm-12">
+      <h5>Teams in {{ season?.name | uppercase }}</h5>
+      <spinner *ngIf="!teams"></spinner>
+      <div class="buttons" *ngIf="teams">
+        <button class="colorBtn btn" *ngFor="let team of teams" (click)="openDialog(team)">{{team.name}}</button>
+      </div>
+
+      <h6 *ngIf="teams && teams.length == 0">There are no teams for this Season.</h6>
+    </div>
+  </div>
+</div>

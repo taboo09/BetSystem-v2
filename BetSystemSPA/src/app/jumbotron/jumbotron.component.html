@@ -1,0 +1,21 @@
+<div class="jumbotron jumbotron-fluid">
+  <div class="bg-overlay-primary">
+    <img src="assets/img/soccer-header.jpg" class="img-cover">
+  </div>
+  <div class="container">
+    <h1 class="display-7">{{ pageName }}
+      <span *ngIf="pageName == 'BETS'">: {{ noBets }}
+        <span *ngIf="noUnsettled > 0">({{ noUnsettled }})</span>
+      </span>
+    </h1>
+    <p class="lead" *ngIf="!season">Season Name: No season to be found!</p>
+    <p class="lead" *ngIf="season">Season Name: {{ season?.name }}</p>
+    <p class="lead">Season Active:
+      <i class="far fa-smile mx-2" *ngIf="season?.active" matTooltip="Active" style="color: orange"></i>
+      <i class="far fa-frown mx-2" *ngIf="!season?.active" matTooltip="Not Active" style="color: orangered"></i>
+    </p>
+    <small>
+      <q>{{ quotes[index] }}</q>
+    </small>
+  </div>
+</div>

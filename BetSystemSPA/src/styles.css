@@ -1,0 +1,121 @@
+/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+/* @import '../node_modules/font-awesome/css/font-awesome.min.css'; */
+@import '../node_modules/@fortawesome/fontawesome-free/css/all.css';
+@import  "../node_modules/bootstrap/dist/css/bootstrap-solar-theme.min.css";
+@import "~@angular/material/prebuilt-themes/purple-green.css";
+/* @import "~@angular/material/prebuilt-themes/deeppurple-amber.css"; */
+/* @import "~@angular/material/prebuilt-themes/indigo-pink.css"; */
+/* @import "~@angular/material/prebuilt-themes/pink-bluegrey.css"; */
+
+
+body, html {
+    font-size: .95em;
+    /* font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* background-color: #2d283e;  */
+    /* background-color: #2b3e50; */
+    background-color: #2a1b3d;
+    color: #ffffff;
+}
+tr.mat-row{
+    height: 30px !important;
+}
+.btn-team{
+    font-size: 1em;
+    padding: 0;
+}
+tr.mat-row td:last-child(){
+    padding-right: 0 !important;
+}
+td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type, th.mat-header-cell:last-of-type{
+    padding-right: 0 !important;
+}
+
+.invalid-value small{
+    color: orangered;
+    width: 138px;
+    display: block;
+}
+
+table .btn-link{
+    color:cyan;
+}
+
+/* footer */
+.footer{
+    text-align: center;
+    color: cyan;
+}
+.footer p i {
+    font-size: 1.15em;
+    color: orange;
+}
+.footer p i:hover {
+    color: cyan;
+}
+.footer hr{
+    width: 80%;
+    background-color: rgb(200, 200, 200);
+}
+
+ /* snackbar classes custom */
+ .snackbar-confirm{
+    background: rgba(10, 10, 10, 0.9);
+    color: limegreen;
+    font-weight: 600;
+ }
+ .snackbar-message{
+    background: rgba(0, 0, 187, 0.9);
+    color: limegreen;
+    font-weight: 600;
+ }
+.snackbar-error{
+    background: rgb(214, 3, 3);
+    opacity: .9;
+    color: black;
+    font-weight: 600;
+}
+mat-dialog-container, .modal-content{
+    opacity: .97 !important;
+    background: #46344e !important;
+}
+
+/* dropdown list */
+.mat-option{
+    background: #ffffff;
+    color: #111111
+}
+.mat-option:hover, .mat-option.mat-active{
+    color: #ffffff;
+    background-color: darkred !important;
+}
+.mat-select-panel .mat-option.mat-selected{
+    color: #ffffff;
+    background: darkred;
+}
+.mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple){
+    color: orange;
+    background: darkred;
+}
+.modal-content hr{
+    background: cyan;
+    width:90%;
+    margin: 0 auto;
+}
+
+/* datepicker */
+.mat-datepicker-content{
+    background-color: darkred;
+}
+.mat-calendar-body-content:hover{
+    background: orange !important;
+}
+.mat-calendar-body-cell:hover .mat-calendar-body-cell-content,
+.mat-calendar-body-cell.mat-calendar-body-active .mat-calendar-body-cell-content{
+    border-color: orange;
+} 
+
+.cdk-overlay-pane{
+    position: absolute !important;
+}

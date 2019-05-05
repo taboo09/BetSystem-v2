@@ -1,0 +1,186 @@
+<div class="row">
+  <div class="col col-8 col-lg-8 col-md-12 col-sm-12 col-xs-12" *ngIf="!dataSource">
+    <spinner></spinner>
+  </div>
+
+  <div class="container text-center mt-5" *ngIf="teamStats && teamStats.length == 0">
+    <h4>There are no teams to be displayed.</h4>
+    <h5>Go to <a href="#" [routerLink]="['/team']" class="btn-outline-primary btn-sm btn mx-3">Teams</a> page to add teams.</h5>
+  </div>
+
+  <div class="col-12 col-8 col-lg-8 col-md-12 col-sm-12 col-xs-12" *ngIf="teamStats && teamStats.length > 0">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z12 table-hover">
+
+      <ng-container matColumnDef="no">
+        <th mat-header-cell *matHeaderCellDef> No </th>
+        <td mat-cell *matCellDef="let team; let i = index"> {{ [i + 1] }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="team">
+        <th mat-header-cell *matHeaderCellDef> Team
+          <button class="btn btn-link px-0" matTooltip="Sort asc" (click)="sortTeamAsc()">
+            <i class="fa fa-arrow-circle-up"></i>
+          </button>
+        </th>
+        <td mat-cell *matCellDef="let team">
+          <button class="btn btn-link px-0 btn-team" [ngClass]="!team.enabled ? 'team-disabled' : ''"
+            [ngbTooltip]="team.comment" (click)="openDialog(team)">
+            {{ team.name }}
+            <i class="far fa-comment-dots" *ngIf="team.comment"></i>
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="stars">
+        <th mat-header-cell *matHeaderCellDef> Likley to Draw </th>
+        <td mat-cell *matCellDef="let team">
+          <div class="d-inline team-stars">
+            <i class="fas fa-star d-inline" *ngFor="let i of counterStarts(team.stars)"></i>
+            <i class="far fa-star d-inline" *ngFor="let i of counterStarts(3 - team.stars)" style="color:olivedrab"></i>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="matches">
+        <th mat-header-cell *matHeaderCellDef> P / W
+          <button class="btn btn-link px-0" matTooltip="Sort desc" (click)="sortPlayedDesc()">
+            <i class="fa fa-arrow-circle-down"></i>
+          </button>
+        </th>
+        <td mat-cell *matCellDef="let team"> {{ team.matchesPlayed }} / {{ team.matchesWon }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="total_bet">
+        <th mat-header-cell *matHeaderCellDef> Total Bet </th>
+        <td mat-cell *matCellDef="let team"> {{ team.moneyBet | currency: currency.symbol:'code':'1.0-2' }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="total_earn">
+        <th mat-header-cell *matHeaderCellDef> Total Earn </th>
+        <td mat-cell *matCellDef="let team"> {{ team.moneyEarn | currency: currency.symbol:'code':'1.0-2' }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="next_stake">
+        <th mat-header-cell *matHeaderCellDef> Next Stake </th>
+        <td mat-cell *matCellDef="let team">
+          <span>{{ team.nextStake | currency: currency.symbol:'code':'1.0-2' }}</span> </td>
+      </ng-container>
+
+      <ng-container matColumnDef="profit">
+        <th mat-header-cell *matHeaderCellDef> Profit
+          <button class="btn btn-link px-0" matTooltip="Sort {{profitSort}}" (click)="sort(profitSort)">
+            <i class="fa fa-arrow-circle-{{profitSort == 'asc' ? 'up' : 'down'}}"></i>
+          </button>
+        </th>
+        <td mat-cell *matCellDef="let team">
+          <span class="positive-profit"
+            *ngIf="team.profit >= 0">{{ team.profit | currency: currency.symbol:'code':'1.0-2' }}</span>
+          <span class="negative-profit"
+            *ngIf="team.profit < 0">{{ team.profit | currency: currency.symbol:'code':'1.0-2' }}</span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+
+  <div class="col-12 col-lg-4 col-md-12 col-sm-12 col-xs-12" *ngIf="!statistics">
+    <spinner></spinner>
+  </div>
+
+  <div class="col-12 col-lg-4 col-md-12 col-sm-12 col-xs-12" *ngIf="teamStats?.length > 0 && statistics">
+    <div class="mat-elevation-z12">
+      <div class="card-body text-center weekly">
+        <h5>Weekly Profit: {{ statistics.weeklyProfit | currency: currency.symbol:'code':'1.0-2' }}</h5>
+      </div>
+    </div>
+
+    <div class="mat-elevation-z12">
+      <div class="card-body text-center mt-3">
+        <div class="row">
+          <div class="col-12 col-lg-12 col-md-6 col-sm-6 col-xs-6">
+            <h5>Total</h5>
+            <table class="table">
+              <tr>
+                <td>Betting</td>
+                <td>{{ statistics.totalBet | currency: currency.symbol:'code':'1.0-2' }}</td>
+              </tr>
+              <tr>
+                <td>Earning</td>
+                <td>{{ statistics.totalEarn | currency: currency.symbol:'code':'1.0-2' }}</td>
+              </tr>
+              <tr>
+                <td>Profit</td>
+                <td class="positive-profit" *ngIf="statistics.profit >= 0">
+                  {{ statistics.profit | currency: currency.symbol:'code':'1.0-2' }}</td>
+                <td class="negative-profit" *ngIf="statistics.profit < 0">
+                  {{ statistics.profit | currency: currency.symbol:'code':'1.0-2' }}</td>
+              </tr>
+              <tr>
+                <td>Played</td>
+                <td>{{ statistics.totalMatches }}</td>
+              </tr>
+              <tr>
+                <td>Won</td>
+                <td>{{ statistics.totalWon }}</td>
+              </tr>
+              <tr>
+                <td>Won %</td>
+                <td>{{ statistics.wonPercentage }}%</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="col-12 col-lg-12 col-md-6 col-sm-6 col-xs-6">
+            <h5>Max</h5>
+            <table class="table">
+              <tr>
+                <td>Stake</td>
+                <td>{{ statistics.maxStake | currency: currency.symbol:'code':'1.0-2' }}</td>
+              </tr>
+              <tr>
+                <td>Return</td>
+                <td>{{ statistics.maxReturn | currency: currency.symbol:'code':'1.0-2' }}</td>
+              </tr>
+              <tr>
+                <td>Odd</td>
+                <td>{{ statistics.maxOdd }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-elevation-z12">
+      <div class="card-body text-center mt-3">
+        <div class="row">
+          <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <h5>Season Info</h5>
+            <table class="table">
+              <tr>
+                <td><span matTooltip="Season's nr of active days">Active Days</span></td>
+                <td>{{ statistics.activeDays }}</td>
+              </tr>
+              <tr>
+                <td><span matTooltip="Distinct bets dates">Dates nr</span></td>
+                <td>{{ statistics.datesNr }}</td>
+              </tr>
+              <tr>
+                <td>Bet First Date</td>
+                <td>{{ statistics.firstBetDate }}</td>
+              </tr>
+              <tr>
+                <td>Bet Last Date</td>
+                <td>{{ statistics.lastBetDate }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

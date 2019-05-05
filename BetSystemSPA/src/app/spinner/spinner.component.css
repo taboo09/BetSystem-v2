@@ -1,0 +1,30 @@
+.spinner {
+    margin: 10% 0;
+}
+
+/* dual ring spinner */
+.dual-ring {
+    display: inline-block;
+    width: 124px;
+    height: 124px;
+    margin: 10% 0;
+}
+.dual-ring:after {
+    content: " ";
+    display: block;
+    width: 116px;
+    height: 116px;
+    margin: 1px;
+    border-radius: 50%;
+    border: 10px solid #fcf;
+    border-color: rgb(158, 0, 158) transparent rgb(209, 2, 2) transparent;
+    animation: dual-ring .8s linear infinite;
+}
+@keyframes dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
