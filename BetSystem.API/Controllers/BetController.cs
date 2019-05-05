@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BetSystem.API.DTOs;
 using BetSystem.API.Models;
 using BetSystem.API.Persistence.Core;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BetSystem.API.Controllers
 {

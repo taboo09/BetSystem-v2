@@ -1,15 +1,13 @@
-﻿using System; 
-using System.Collections.Generic; 
-using System.Linq;
-using System.Reflection;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
-using System.Threading.Tasks; 
-using BetSystem.API.Models; 
-using BetSystem.API.Persistence.Core; 
-using Microsoft.AspNetCore.Mvc; 
+using System.Threading.Tasks;
+using BetSystem.API.Models;
+using BetSystem.API.Persistence.Core;
+using Microsoft.AspNetCore.Mvc;
 
-namespace BetSystem.API.Controllers {
+namespace BetSystem.API.Controllers
+{
     [Route("api/[controller]")]
     [ApiController]
     public class AppController:ControllerBase {
