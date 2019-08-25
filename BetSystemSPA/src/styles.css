@@ -15,8 +15,8 @@ body, html {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     /* background-color: #2d283e;  */
     /* background-color: #2b3e50; */
-    background-color: #2a1b3d;
-    filter: brightness(115%);
+    /* background-color: #2a1b3d; */
+    background-color: #372450;
     color: #ffffff;
 }
 tr.mat-row{

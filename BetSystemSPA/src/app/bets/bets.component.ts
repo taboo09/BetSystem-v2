@@ -114,7 +114,7 @@ export class BetsComponent implements OnInit {
       Object.assign(betToUpdate, this.editForm.value);
       this.betService.editBet(betToUpdate)
         .subscribe( next => {
-          let messageType = betToUpdate.won ? 'message' : 'confirm';
+          let messageType = String(betToUpdate.won) == "true" ? 'message' : 'confirm';
           this.snackBarService.snackBarMessage("Bet Updated.", "Ok", messageType);
           this.getBets();
           this.selectedValue = 'all';
