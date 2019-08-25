@@ -25,8 +25,8 @@ namespace BetSystem.API
         public void ConfigureServices(IServiceCollection services)
         {
             // services.AddDbContext<BetDbContext>(x => x.UseSqlite(Configuration.GetConnectionString("Default-sqllite")));
-            // services.AddDbContext<BetDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("Default-sql")));
-            services.AddDbContext<BetDbContext>(x => x.UseMySql(Configuration.GetConnectionString("Default-mysql")));
+            services.AddDbContext<BetDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("Default-sql")));
+            // services.AddDbContext<BetDbContext>(x => x.UseMySql(Configuration.GetConnectionString("Default-mysql")));
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

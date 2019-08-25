@@ -29,6 +29,7 @@ namespace BetSystem.API.Persistence
 
             team.SeasonId = _context.Seasons.SingleOrDefault(x => x.Selected == true).Id;
             team.Enabled = true;
+            team.Comment = team.Comment == "" ? null : team.Comment;
 
             _context.Add(team);
 

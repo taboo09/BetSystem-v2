@@ -1,3 +1,4 @@
+import { betUpdate } from './../_models/betUpdate';
 import { ActivatedRoute } from '@angular/router';
 import { currency } from './../_models/currency';
 import { CurrencyService } from './../_services/currency.service';
@@ -9,7 +10,6 @@ import { bet } from '../_models/bet';
 import { MatTableDataSource } from '@angular/material';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { BsModalService } from 'ngx-bootstrap';
-import { betUpdate } from '../_models/betUpdate';
 
 @Component({
   selector: 'app-bets',
@@ -114,7 +114,8 @@ export class BetsComponent implements OnInit {
       Object.assign(betToUpdate, this.editForm.value);
       this.betService.editBet(betToUpdate)
         .subscribe( next => {
-          this.snackBarService.snackBarMessage("Bet Updated.", "Ok", "confirm");
+          let messageType = betToUpdate.won ? 'message' : 'confirm';
+          this.snackBarService.snackBarMessage("Bet Updated.", "Ok", messageType);
           this.getBets();
           this.selectedValue = 'all';
         }, error => {

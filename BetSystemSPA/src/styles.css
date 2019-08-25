@@ -16,6 +16,7 @@ body, html {
     /* background-color: #2d283e;  */
     /* background-color: #2b3e50; */
     background-color: #2a1b3d;
+    filter: brightness(115%);
     color: #ffffff;
 }
 tr.mat-row{
@@ -62,12 +63,12 @@ table .btn-link{
  /* snackbar classes custom */
  .snackbar-confirm{
     background: rgba(10, 10, 10, 0.9);
-    color: limegreen;
+    color: rgb(120, 253, 120);
     font-weight: 600;
  }
  .snackbar-message{
-    background: rgba(0, 0, 187, 0.9);
-    color: limegreen;
+    background: rgba(173, 198, 245, 0.9);
+    color: rgb(41, 41, 41);
     font-weight: 600;
  }
 .snackbar-error{

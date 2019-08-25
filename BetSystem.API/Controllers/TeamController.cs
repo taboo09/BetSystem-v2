@@ -53,7 +53,7 @@ namespace BetSystem.API.Controllers
         {
             var team = await _teamRepository.FindTeam(teamDto.Id);
 
-            team.Comment = teamDto.Comment;
+            team.Comment = teamDto.Comment == "" ? null : teamDto.Comment;
             team.Enabled = teamDto.Enabled;
 
             await _unitOfWork.SaveAll();
