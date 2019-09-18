@@ -22,7 +22,7 @@ namespace BetSystem.API.Persistence
 
         public async Task<bool> AddTeam(Team team)
         {
-            var teams = await _context.Teams.Include(s => s.Season).Where(s => s.Season.Selected).ToListAsync();
+            var teams = await _context.Teams.Where(s => s.Season.Selected).ToListAsync();
 
             if (teams.Any(s => s.Season.Active == false) || teams.Any(x => x.Name.ToLower() == team.Name.ToLower()))
                 return false;

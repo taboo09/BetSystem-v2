@@ -25,9 +25,9 @@ namespace BetSystem.API.Persistence
             return await _context.Set<T>().AsNoTracking().LastOrDefaultAsync();
         }
 
-        public Task<IEnumerable<T>> GetAll<T>() where T : class
+        public async Task<IEnumerable<T>> GetAll<T>() where T : class
         {
-            throw new System.NotImplementedException();
+            return await _context.Set<T>().ToListAsync();
         }
 
         public void Remove<T>(T entity) where T : class

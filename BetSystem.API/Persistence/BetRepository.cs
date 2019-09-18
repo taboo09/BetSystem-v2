@@ -43,7 +43,7 @@ namespace BetSystem.API.Persistence
 
         public IEnumerable<object> GetBets()
         {
-            return _context.Bets.Include(t => t.Team).Where(x => x.Team.Season.Selected).Select(x => new {
+            return _context.Bets.Where(x => x.Team.Season.Selected).Select(x => new {
                 Id = x.Id,
                 TeamId = x.TeamId,
                 Team = x.Team.Name,
@@ -61,7 +61,7 @@ namespace BetSystem.API.Persistence
 
         public async Task<IEnumerable<object>> GetBetsAsync()
         {
-            return await _context.Bets.Include(t => t.Team).Where(x => x.Team.Season.Selected).Select(x => new {
+            return await _context.Bets.Where(x => x.Team.Season.Selected).Select(x => new {
                 Id = x.Id,
                 TeamId = x.TeamId,
                 Team = x.Team.Name,
@@ -83,7 +83,7 @@ namespace BetSystem.API.Persistence
 
         private async Task<bool> CheckSeason(int teamId)
         {
-            var team = await _context.Teams.Include(s => s.Season).SingleOrDefaultAsync(t => t.Id == teamId);
+            var team = await _context.Teams.SingleOrDefaultAsync(t => t.Id == teamId);
 
             return team.Season.Active == false ? false : team.Season.Selected;
         }

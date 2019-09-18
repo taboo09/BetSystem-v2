@@ -24,9 +24,12 @@ namespace BetSystem.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddDbContext<BetDbContext>(x => x.UseSqlite(Configuration.GetConnectionString("Default-sqllite")));
-            services.AddDbContext<BetDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("Default-sql")));
-            // services.AddDbContext<BetDbContext>(x => x.UseMySql(Configuration.GetConnectionString("Default-mysql")));
+            // services.AddDbContext<BetDbContext>(x => 
+                // x.UseLazyLoadingProxies().UseSqlite(Configuration.GetConnectionString("Default-sqllite")));
+            services.AddDbContext<BetDbContext>(x => 
+                x.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("Default-sql")));
+            // services.AddDbContext<BetDbContext>(x => 
+            //  x.UseLazyLoadingProxies().UseMySql(Configuration.GetConnectionString("Default-mysql")));
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

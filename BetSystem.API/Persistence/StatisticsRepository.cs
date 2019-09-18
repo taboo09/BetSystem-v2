@@ -18,11 +18,8 @@ namespace BetSystem.API.Persistence
             _context = context;
         }
 
-        private IQueryable<Bet> GetBets() => _context.Bets.Include(t => t.Team)
-                .Where(x => x.Team.Season.Selected).AsQueryable();
+        private IQueryable<Bet> GetBets() => _context.Bets.Where(x => x.Team.Season.Selected).AsQueryable();
 
-        // private async Task<IEnumerable<Team>> GetTeams() => await _context.Teams.Where(t => t.Season.Selected)
-        //     .ToListAsync();
         private IQueryable<Team> GetTeams() => _context.Teams.Where(t => t.Season.Selected).AsQueryable();
 
         private async Task<TeamStatusDto> GetTeamStatus(Team team)

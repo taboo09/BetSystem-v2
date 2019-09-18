@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace BetSystem.API.Controllers
         [HttpGet]
         public async Task<ActionResult> Get() 
         {
-            return Ok(await _appRepository.FindLast<AppVersion>()); 
+            return Ok((await _appRepository.GetAll<AppVersion>()).OrderBy(x => x.Date).LastOrDefault());
         }
 
         // [HttpGet]
@@ -37,7 +38,7 @@ namespace BetSystem.API.Controllers
         // } 
            
 
-        // http://localhost:5055/api/app?v=2.0.1
+        // http://localhost:5060/api/app?v=2.0.1
         [HttpPost]
         public async Task<ActionResult> Save(string v) 
         {

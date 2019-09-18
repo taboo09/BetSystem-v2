@@ -78,8 +78,7 @@ namespace BetSystem.API.Persistence
 
             if (season != null) 
             {
-                var bets = _context.Bets.Include(t => t.Team)
-                    .Where(x => x.Team.SeasonId == season.Id).AsQueryable();
+                var bets = _context.Bets.Where(x => x.Team.SeasonId == season.Id).AsQueryable();
 
                 season.Teams = await _context.Teams.Where(t => t.SeasonId == season.Id).CountAsync();
                 season.Bets = await bets.CountAsync();
