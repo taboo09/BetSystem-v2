@@ -40,8 +40,9 @@ export class JumbotronComponent implements OnInit {
   getSeason() {
     this.seasonService.getSelectedSeason()
       .subscribe(s => {
-        // Object.assign(this.season, s);
         this.season = s;
+        // send the selected season to SeasonService
+        this.seasonService.changeSelectedSeason(s);
       });
   }
 

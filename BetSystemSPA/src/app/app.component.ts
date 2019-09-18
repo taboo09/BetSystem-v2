@@ -39,8 +39,7 @@ export class AppComponent implements OnInit{
   getAppLastVersion(){
     this.appService.getAppVersion()
       .subscribe(v => {
-      var keys = Object.keys(v);
-      this.version = v[keys[1]];
+        this.version = v["value"];
       });
   }
 
