@@ -56,7 +56,7 @@ namespace BetSystem.API.Persistence
                 Withdrawal = x.Withdrawal,
                 CashReturn = x.CashReturn,
                 Profit = x.Profit
-            }).OrderBy(x => x.Date).ToList();
+            }).OrderBy(x => x.Date).ThenBy(x => x.Id).ToList();
         }
 
         public async Task<IEnumerable<object>> GetBetsAsync()
