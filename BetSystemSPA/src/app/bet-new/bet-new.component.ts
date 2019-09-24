@@ -71,15 +71,10 @@ export class BetNewComponent implements OnInit {
   }
 
   checkSeason(){
-    // this.seasonService.getSelectedSeason()
-    //   .subscribe(s => {
-    //     this.season = s;
-    //     if (this.season && (this.season.active === false)) this.matchForm.disable();
-    //   });
-
     this.seasonService.currentSeason
       .subscribe(s => {
         this.season = s;
+        if (this.season && (this.season.active === false)) this.matchForm.disable();
       });
   }
 

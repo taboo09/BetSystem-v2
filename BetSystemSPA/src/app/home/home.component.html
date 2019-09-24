@@ -62,7 +62,7 @@
 
       <ng-container matColumnDef="next_stake">
         <th mat-header-cell *matHeaderCellDef> Next Stake </th>
-        <td mat-cell *matCellDef="let team">
+        <td mat-cell *matCellDef="let team" class="next-stake">
           <span>{{ team.nextStake | currency: currency.symbol:'code':'1.0-2' }}</span> </td>
       </ng-container>
 
