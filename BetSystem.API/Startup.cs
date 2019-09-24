@@ -32,9 +32,9 @@ namespace BetSystem.API
             //  x.UseLazyLoadingProxies().UseMySql(Configuration.GetConnectionString("Default-mysql")));
 
             services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddAutoMapper(); 
+            services.AddAutoMapper(typeof(Startup)); 
             services.AddCors();
 
             services.AddTransient<SeedData>();
@@ -62,7 +62,7 @@ namespace BetSystem.API
             // seed currencies and app version table
             seeder.Seed();
             
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto

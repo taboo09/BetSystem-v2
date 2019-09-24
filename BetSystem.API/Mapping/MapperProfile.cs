@@ -10,6 +10,7 @@ namespace BetSystem.API.Mapping
         {
             // Domain to API Resources
             CreateMap<Bet, BetDto>();
+            CreateMap<Team, TeamDto>();
 
             // API Resouces to Domain
             CreateMap<CurrencyDto, Currency>();
