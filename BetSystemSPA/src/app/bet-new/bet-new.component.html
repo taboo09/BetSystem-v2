@@ -13,7 +13,7 @@
     <div class="form-group">
       <mat-form-field appearance="outline" >
         <mat-label>{{ matchForm.get('teamId').hasError('required') && matchForm.get('teamId').touched ? 'Choose Team' : 'Team' }}</mat-label>
-        <mat-select [formControl]="matchForm.get('teamId')" required >
+        <mat-select [formControl]="matchForm.get('teamId')" required #teamName>
           <mat-option *ngFor="let team of teams" [value]="team.id">
             {{team.name}}
           </mat-option>

@@ -1,37 +1,45 @@
 import { SeasonService } from './../_services/season.service';
 import { team } from './../_models/team';
 import { BetService } from './../_services/bet.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TeamService } from '../_services/team.service';
 import { Router } from '@angular/router';
 import { SnackBarService } from '../_services/snack-bar.service';
-import { DatePipe } from '@angular/common';
 import { bet } from '../_models/bet';
+import { MatSelect } from '@angular/material';
 
 @Component({
   selector: 'bet-new',
   templateUrl: './bet-new.component.html',
   styleUrls: ['./bet-new.component.css']
 })
-export class BetNewComponent implements OnInit {
+export class BetNewComponent implements OnInit, AfterViewInit {
   bet: bet;
   matchForm: FormGroup;
   teams: team[];
   season: any = {};
+  @ViewChild('teamName') teamName: MatSelect;
   
   constructor(private betService: BetService,
       private teamService: TeamService,
       private snackBarService: SnackBarService,
       private seasonService: SeasonService,
       private fb: FormBuilder,
-      private datePipe: DatePipe,
       private router: Router) { }
 
   ngOnInit() {
     this.checkSeason();
     this.getTeams();
     this.createMatchForm();
+    setTimeout(() => {
+      this.teamName.focus();
+    }, 50);
+    
+  }
+
+  ngAfterViewInit(){
+    // this.teamName.focus();
   }
 
   createMatchForm(){
@@ -57,7 +65,7 @@ export class BetNewComponent implements OnInit {
       this.bet = Object.assign({}, this.matchForm.value);
       // Getting date string format to ignore UTC
       this.bet.date_text = this.bet.date.toLocaleDateString();
-      this.betService.addBet(this.bet).subscribe( next => {
+      this.betService.addBet(this.bet).subscribe( () => {
         this.snackBarService.snackBarMessage('Bet has been placed', 'Ok', 'confirm');
         this.router.navigate(['/home']);
       }, error => {
