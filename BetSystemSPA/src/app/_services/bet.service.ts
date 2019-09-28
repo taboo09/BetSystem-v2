@@ -1,3 +1,4 @@
+import { BetsCount } from './../_models/betsCount';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -20,19 +21,43 @@ export class BetService {
 
   constructor(private http: HttpClient) { }
 
-  getBets(): Observable<bet[]> {
-    return this.http.get<bet[]>(this.baseUrl);
+  getBets(start: number): Observable<bet[]> {
+    return this.http.get<bet[]>(this.baseUrl + '?start=' + start);
+  }
+
+  getCount(){
+    return this.http.get<BetsCount>(this.baseUrl + 'count');
+  }
+
+  getBetsByTeamId(teamId: number){
+    return this.http.get<bet[]>(this.baseUrl + teamId);
+  }
+
+  getCustomBets(selection: string){
+    return this.http.get<bet[]>(this.baseUrl + selection);
+  }
+
+  getLast15Bets(){
+    return this.http.get<bet[]>(this.baseUrl + 'last15');
+  }
+
+  getLastDate(){
+    return this.http.get<bet[]>(this.baseUrl + 'lastdate');
+  }
+
+  getUnsettledBets(){
+    return this.http.get<bet[]>(this.baseUrl + 'unsettled');
   }
 
   addBet(bet: bet){
-    return this.http.post(this.baseUrl, bet);
+    return this.http.post<object>(this.baseUrl, bet);
   }
 
   deleteBet(id: number){
-    return this.http.delete(this.baseUrl + id);
+    return this.http.delete<object>(this.baseUrl + id);
   }
 
   editBet(bet: betUpdate){
-    return this.http.put(this.baseUrl, bet);
+    return this.http.put<object>(this.baseUrl, bet);
   }
 }

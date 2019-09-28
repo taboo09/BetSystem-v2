@@ -25,6 +25,6 @@ export class TeamService {
   }
 
   updateTeam(team: team){
-    return this.http.put(this.baseUrl, team);
+    return this.http.put<object>(this.baseUrl, team);
   }
 }

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BetSystem.API.DTOs;
@@ -12,6 +14,7 @@ namespace BetSystem.API.Controllers
     [ApiController]
     public class BetController : ControllerBase
     {
+        const int BETSIZE = 50;
         private readonly IBetRepository _betRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
@@ -36,24 +39,50 @@ namespace BetSystem.API.Controllers
             if (await _betRepository.AddBet(bet))
             {
                 await _unitOfWork.SaveAll();
-                return Ok();
+                return Ok(new { message = "New bet has been created." });
             }
 
             return BadRequest($"Team belongs to a non-active or unselected season!");
         }
 
         [HttpGet]
-        public IActionResult GetBets()
+        public async Task<IActionResult> GetBets([FromQuery] int start)
         {
-            var bets = _betRepository.GetBets();
+            var bets = await _betRepository.GetBetsAsync(start, BETSIZE);
 
             return Ok(bets);
         }
 
-        [HttpGet("betasync")]
-        public async Task<IActionResult> GetBetsAsync()
+        [HttpGet("count")]
+        public async Task<IActionResult> GetBetsCount()
         {
-            var bets = await _betRepository.GetBetsAsync();
+            return Ok(await _betRepository.GetBetsCount());
+        }
+
+        [HttpGet("unsettled")]
+        public async Task<IActionResult> GetUnsettledBets()
+        {
+            return Ok(await _betRepository.UnsettledBets());
+        }
+
+        [HttpGet("last15")]
+        public async Task<IActionResult> GetLast15Bets()
+        {
+            return Ok(await _betRepository.GetBetsAsync(0, 15));
+        }
+
+        [HttpGet("lastdate")]
+        public async Task<IActionResult> GetLastDateBets()
+        {
+            return Ok(await _betRepository.GetBetsAsync(0, 0));
+        }
+
+        [HttpGet("{teamId}")]
+        public async Task<IActionResult> GetAllBetsByTeamId(int teamId)
+        {
+            var bets = await _betRepository.AllBetsByTeamId(teamId);
+
+            if (bets.ToList().Count == 0) return BadRequest("No bets for this Team or Team does not exist.");
 
             return Ok(bets);
         }
@@ -64,7 +93,7 @@ namespace BetSystem.API.Controllers
             if (await _betRepository.DeleteBet(id)) 
             {
                 await _unitOfWork.SaveAll();
-                return Accepted();
+                return Accepted(new { message = "Bet has been deleted." });
             }
 
             return BadRequest("Cannot delete a bet from a non-active or unselected season!");
@@ -88,10 +117,10 @@ namespace BetSystem.API.Controllers
 
                 await _unitOfWork.SaveAll();
 
-                return Accepted();
+                return Accepted(new { message = "Bet has been updated." });
             }
 
-            return BadRequest();
+            return BadRequest("Error occurred saving the bet.");
         }
     }
 }

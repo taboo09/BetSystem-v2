@@ -62,7 +62,7 @@ export class TeamModalComponent implements OnInit {
         this.createChartTeam();
         }
       }, error => {
-        this.snackBarService.snackBarMessage("Error", "Close", "error");
+        this.snackBarService.snackBarMessage(error, "Close", "error");
       });
   }
 
@@ -75,10 +75,10 @@ export class TeamModalComponent implements OnInit {
     Object.assign(this.team, this.teamForm.value);
     this.teamService.updateTeam(this.team)
     .subscribe( next => {
-      this.snackBarService.snackBarMessage("Team Updated.", "Ok", "confirm");
+      this.snackBarService.snackBarMessage(next['message'], "Ok", "confirm");
       this.router.navigate(['/home']);
     }, error => {
-      this.snackBarService.snackBarMessage("Error", "Close", "error");
+      this.snackBarService.snackBarMessage(error, "Close", "error");
     });
   }
 

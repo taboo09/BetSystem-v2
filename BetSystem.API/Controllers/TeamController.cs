@@ -58,7 +58,7 @@ namespace BetSystem.API.Controllers
 
             await _unitOfWork.SaveAll();
 
-            return Accepted();
+            return Accepted(new { message = "Team has been updated."});
         }
     }
 }

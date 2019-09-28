@@ -4,14 +4,18 @@
   <div class="d-inline">
     <mat-radio-group [(ngModel)]="selectedValue">
       <mat-radio-button value="all" (click)="displayAll()">All Bets</mat-radio-button>
-      <mat-radio-button value="last15" (click)="last15()">Last 15</mat-radio-button>
-      <mat-radio-button value="date" (click)="lastDate()">Last Date</mat-radio-button>
-      <mat-radio-button value="unsettled" (click)="unsettled()">Unsettled</mat-radio-button>
+      <mat-radio-button value="last15" (click)="getCustomBets('last15')">Last 15</mat-radio-button>
+      <mat-radio-button value="lastdate" (click)="getCustomBets('lastdate')">Last Date</mat-radio-button>
+      <mat-radio-button value="unsettled" (click)="getCustomBets('unsettled')">Unsettled</mat-radio-button>
     </mat-radio-group>
     <mat-checkbox class="float-right" (click)="enableDelete()">Delete Bet</mat-checkbox>
   </div>
 
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z12 table-hover">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z12 table-hover"
+    infinite-scroll
+    [infiniteScrollDistance]="1"
+    [infiniteScrollThrottle]="1000"
+    (scrolled)="onScrollDown()">
 
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> No </th>
@@ -21,7 +25,7 @@
     <ng-container matColumnDef="team">
       <th mat-header-cell *matHeaderCellDef> Team </th>
       <td mat-cell *matCellDef="let bet">
-        <button class="btn btn-link px-0 btn-team" (click)="displayBetsById(bet.teamId)"> {{ bet.team }} </button>
+        <button class="btn btn-link px-0 btn-team" (click)="getBetsByTeamId(bet.teamId)"> {{ bet.team }} </button>
       </td>
     </ng-container>
 
@@ -92,9 +96,11 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
+  <spinner3 *ngIf="!finished"></spinner3>
+
 </div>
 
-<div class="container text-center mt-5" *ngIf="initialBets && initialBets.length == 0">
+<div class="container text-center mt-5" *ngIf="bets && bets.length == 0">
   <h4>There are no bets to be displayed.</h4>
   <h5>Go to <a href="#" [routerLink]="['/new-bet']" class="btn-outline-primary btn-sm btn mx-3">Add Bet</a> page to add bets.</h5>
 </div>

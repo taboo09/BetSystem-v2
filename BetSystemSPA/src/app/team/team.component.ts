@@ -59,14 +59,6 @@ export class TeamComponent implements OnInit {
     return '"' + this.teamForm.value.name.toUpperCase() + '" already added in this season.';
   }
 
-  // errorTeamName(name: string) {
-  //   for (let i = 0; i < this.teams.length; i++) {
-  //     if (this.teams[i].name.toLowerCase() === name.toLowerCase())
-  //       return true;
-  //   }
-  //   return false;
-  // }
-
   getTeams() {
     setTimeout( () => {
     this.teamService.getTeams()
@@ -80,7 +72,6 @@ export class TeamComponent implements OnInit {
   }
 
   addTeam(){
-    // let commentValue = this.teamForm.value.comment;
     // this.teamForm.reset({ comment: commentValue });
     Object.assign(this.team, this.teamForm.value);
     this.teamService.addTeam(this.team)

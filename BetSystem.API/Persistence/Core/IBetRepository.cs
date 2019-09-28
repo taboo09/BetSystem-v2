@@ -10,7 +10,9 @@ namespace BetSystem.API.Persistence.Core
         Task<bool> AddBet(Bet bet);
         Task<bool> DeleteBet(int id);
         Task<Bet> FindBet(int id);
-        IEnumerable<object> GetBets();
-        Task<IEnumerable<object>> GetBetsAsync();
+        Task<object> GetBetsCount();
+        Task<IEnumerable<object>> GetBetsAsync(int start, int size);
+        Task<IEnumerable<object>> UnsettledBets();
+        Task<IEnumerable<object>> AllBetsByTeamId(int teamId);
     }
 }

@@ -21,13 +21,14 @@ import { BetService } from './_services/bet.service';
 import { appRoutes } from './routes';
 import { RouterModule } from '@angular/router';
 import { TeamComponent } from './team/team.component';
-import { SpinnerComponent, Spinner2Component } from './spinner/spinner.component';
+import { SpinnerComponent, Spinner2Component, Spinner3Component } from './spinner/spinner.component';
 import { TeamModalComponent } from './team-modal/team-modal.component';
 import { AdminComponent } from './admin/admin.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { HomeComponent } from './home/home.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { DatePipe } from '@angular/common';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { DatePipe } from '@angular/common';
     TeamComponent,
     SpinnerComponent,
     Spinner2Component,
+    Spinner3Component,
     TeamModalComponent,
     AdminComponent,
     StatisticsComponent,
@@ -69,6 +71,7 @@ import { DatePipe } from '@angular/common';
     NgbModule,
     ModalModule,
     MatExpansionModule,
+    InfiniteScrollModule,
     ButtonsModule.forRoot(),
     RouterModule.forRoot(appRoutes, {
       scrollPositionRestoration: 'enabled'

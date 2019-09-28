@@ -65,12 +65,13 @@ export class BetNewComponent implements OnInit, AfterViewInit {
       this.bet = Object.assign({}, this.matchForm.value);
       // Getting date string format to ignore UTC
       this.bet.date_text = this.bet.date.toLocaleDateString();
-      this.betService.addBet(this.bet).subscribe( () => {
-        this.snackBarService.snackBarMessage('Bet has been placed', 'Ok', 'confirm');
-        this.router.navigate(['/home']);
-      }, error => {
-        this.snackBarService.snackBarMessage(error, 'close', 'error');
-      });
+      this.betService.addBet(this.bet)
+        .subscribe( next => {
+          this.snackBarService.snackBarMessage(next['message'], 'Ok', 'confirm');
+          this.router.navigate(['/home']);
+        }, error => {
+          this.snackBarService.snackBarMessage(error, 'close', 'error');
+        });
     }
   }
 

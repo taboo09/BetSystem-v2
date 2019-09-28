@@ -13,3 +13,10 @@ export class SpinnerComponent { }
   styleUrls: ['./spinner.component.css']
 })
 export class Spinner2Component  { }
+
+@Component({
+  selector: 'spinner3',
+  templateUrl: './spinner3.component.html',
+  styleUrls: ['./spinner.component.css']
+})
+export class Spinner3Component  { }
