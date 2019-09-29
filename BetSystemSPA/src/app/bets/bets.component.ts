@@ -108,6 +108,7 @@ export class BetsComponent implements OnInit {
   }
   
   getBetsByTeamId(teamId: number){
+    this.teamId = teamId;
     this.finished = true;
     this.selectedValue = '';
     this.betService.getBetsByTeamId(teamId)
@@ -145,7 +146,7 @@ export class BetsComponent implements OnInit {
         .subscribe( next => {
           let messageType = String(betToUpdate.won) == "true" ? 'message' : 'confirm';
           this.snackBarService.snackBarMessage(next['message'], "Ok", messageType);
-          this.getCustomBets('last15');
+          this.displayBetsAfterConfirm();
           this.sharedServiceBetsCount(this.betsCount.count, this.betsCount.unsettled);
         }, error => {
           this.snackBarService.snackBarMessage(error, "Close", "error");
@@ -156,7 +157,7 @@ export class BetsComponent implements OnInit {
       if(this.bet.won == null) this.betsCount.unsettled--;
       this.betService.deleteBet(this.bet.id)
         .subscribe( next => {
-          this.getCustomBets('last15');
+          this.displayBetsAfterConfirm();
           this.sharedServiceBetsCount(this.betsCount.count, this.betsCount.unsettled);
           this.snackBarService.snackBarMessage(next['message'], "Ok", "confirm");
       }, error => {
@@ -164,6 +165,23 @@ export class BetsComponent implements OnInit {
       });
     }
     this.modalCancel();
+  }
+
+  displayBetsAfterConfirm(){
+    switch (this.selectedValue) {
+      case 'unsettled':
+        this.getCustomBets(this.selectedValue);
+        break;
+      case '':
+        this.getBetsByTeamId(this.teamId);
+        break;
+      case 'lastdate':
+        this.getCustomBets(this.selectedValue);
+        break;
+      default:
+        this.getCustomBets('last15');
+        break;
+    }
   }
 
   getSelectedCurrency(){
@@ -204,8 +222,7 @@ export class BetsComponent implements OnInit {
 
   onScrollDown () {
     if (!this.finished){
-      console.log('scrolled down!!');
-
+      // console.log('scrolled down!!');
       this.start += 50;
       this.getInfiniteBets();
     }
