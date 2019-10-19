@@ -38,11 +38,11 @@ i{
     color: #AAAAAA;
 }
 .card-body table tr td:last-child{
-    font-size: 1.1em;
+    font-size: 1.05em;
 }
 .card-body table td{
     border: none;
-    font-size:1.05em;
+    font-size:1em;
     width: 40%;
     padding: .4rem .75rem;
 }
@@ -61,4 +61,7 @@ i{
 }
 .next-stake{
     color: cyan
+}
+.top-stakes table{
+    line-height: 1;
 }

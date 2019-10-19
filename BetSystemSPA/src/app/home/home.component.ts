@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   statistics: statistics;
   currency: currency;
   dataSource;
+  topNextStakes: any = [];
   profitSort:string = 'desc';
   displayedColumns: string[] = ['no', 'team', 'stars', 'matches', 'total_bet', 'total_earn', 'next_stake', 'profit'];
 
@@ -40,6 +41,8 @@ export class HomeComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.teamStats);
         // this.teamsProfit = teamsStats.map(x => ({ name: x.name, profit: x.profit}));
         // this.statsService.getTeamsProfitFromHome(this.teamsProfit);
+        this.topNextStakes = teamsStats.filter(x => x.nextStake >= 30)
+          .map(x => ({ team: x.name, stake: x.nextStake })).sort((a,b) => b.stake - a.stake);
       }, error => {
         this.snackBarService.snackBarMessage(error, 'close', 'error');
       });
