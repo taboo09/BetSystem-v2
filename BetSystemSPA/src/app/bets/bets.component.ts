@@ -31,6 +31,7 @@ export class BetsComponent implements OnInit {
   displayedColumns: string[] = ['id', 'team', 'date', 'match', 'odd', 'stake', 'total', 'won', 'cash_out', 'return'];
   start: number = 0;
   finished = true;
+  country:string = '';
 
   constructor(private betService: BetService,
       private modalService: BsModalService,
@@ -120,6 +121,19 @@ export class BetsComponent implements OnInit {
       });
   }
 
+  getBetsByCountry(country: string){
+    this.finished = true;
+    this.selectedValue = 'country';
+    this.country = country;
+    this.betService.getBetsByCountry(country)
+      .subscribe(bets => {
+        this.bets = bets;
+        this.dataSource = new MatTableDataSource(this.bets);
+      }, error => {
+        this.snackBarService.snackBarMessage(error, 'close', 'error');
+      });
+  }
+
   enableDelete(){
     if (this.displayedColumns.indexOf('delete') > 0) 
       this.displayedColumns.splice(this.displayedColumns.length - 1, 1);
@@ -177,6 +191,9 @@ export class BetsComponent implements OnInit {
         break;
       case 'lastdate':
         this.getCustomBets(this.selectedValue);
+        break;
+      case 'country':
+        this.getBetsByCountry(this.country);
         break;
       default:
         this.getCustomBets('last15');

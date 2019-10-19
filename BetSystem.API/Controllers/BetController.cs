@@ -77,6 +77,15 @@ namespace BetSystem.API.Controllers
             return Ok(await _betRepository.GetBetsAsync(0, 0));
         }
 
+        [HttpGet("country/{country}")]
+        public async Task<IActionResult> GetBetsByCountry(string country)
+        {
+            if (country == null) return BadRequest("Country name cannot be empty");
+
+            return Ok(await _betRepository.AllBetsByCountry(country));
+        }
+
+
         [HttpGet("{teamId}")]
         public async Task<IActionResult> GetAllBetsByTeamId(int teamId)
         {

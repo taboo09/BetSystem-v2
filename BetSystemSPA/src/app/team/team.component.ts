@@ -19,6 +19,8 @@ export class TeamComponent implements OnInit {
   team = {} as team;
   season: any = {};
   teamForm: FormGroup;
+  countries = ['Belgium', 'France', 'Germany', 'Greece', 'Italy', 'Netherlands', 'Norway', 'Other', 
+    'Portugal', 'Romania', 'Russia', 'Spain', 'Sweden', 'Switzerland', 'Turkey', 'UK'];
 
   constructor(private teamService: TeamService,
       private snackBarService: SnackBarService,
@@ -38,6 +40,7 @@ export class TeamComponent implements OnInit {
       name: ['', 
         [Validators.required, Validators.maxLength(36), Validators.minLength(2)]
     ],
+      country: ['', Validators.required],
       comment: []
     },
       { validator: this.teamNameValidation }

@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { teamProfit } from '../_models/teamProfit';
 import { dateStats } from '../_models/dateStats';
 import { statistics } from '../_models/statistics';
+import { CountryStats } from '../_models/countryStats';
 
 
 @Injectable({
@@ -34,6 +35,10 @@ export class StatsService {
 
   getStatistics(): Observable<statistics> {
     return this.http.get<statistics>(this.baseUrl + 'stats');
+  }
+
+  getCountryStats(): Observable<CountryStats[]> {
+    return this.http.get<CountryStats[]>(this.baseUrl + 'countries');
   }
   
 }

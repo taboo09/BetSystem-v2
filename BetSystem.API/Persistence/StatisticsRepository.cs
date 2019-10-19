@@ -36,6 +36,7 @@ namespace BetSystem.API.Persistence
             teamStatus.Id = team.Id;
             teamStatus.Name = team.Name;
             teamStatus.Comment = team.Comment;
+            teamStatus.Country = team.Country;
             teamStatus.Enabled = team.Enabled;
             teamStatus.MatchesPlayed = listOfBets.Count();
             teamStatus.MatchesWon = listOfBets.Where(x => x.Won == true).Count();
@@ -176,6 +177,7 @@ namespace BetSystem.API.Persistence
 
                 teamProfitDto.Id = team.Id;
                 teamProfitDto.Name = team.Name;
+                teamProfitDto.Country = team.Country;
                 teamProfitDto.Profit = Math.Round(listOfBets.Where(x => x.TeamId == team.Id).Sum(x => x.Profit) - 
                     listOfBets.Where(x => x.TeamId == team.Id).Sum(x => x.Stake), 2);
 
@@ -183,6 +185,30 @@ namespace BetSystem.API.Persistence
             }
 
                 return teamsProfit.OrderBy(x => x.Name).ToList();
+        }
+
+        public async Task<IEnumerable<CountryDto>> CountriesStas()
+        {
+            // SQL QUERY
+            // select t.country, count(*) as count, sum(b.stake) as moneyIn, sum(b.profit) as profit 
+            // from teams as t, bets as b
+            // where t.seasonid = 20 and t.id = b.teamid
+            // group by country 
+
+            var countries = from t in _context.Teams
+                    join b in _context.Bets on t.Id equals b.TeamId
+                    where (t.Season.Selected == true)
+                    group new { b.Stake, b.Profit }
+                    by new { t.Country } into g
+                    select new CountryDto()
+                    {
+                        CountryName = g.Key.Country,
+                        MoneyBet = Math.Round(g.Sum(x => x.Stake), 2),
+                        MoneyEarn = Math.Round(g.Sum(x => x.Profit), 2),
+                        NrTeams = g.Count()
+                    };
+
+            return (await countries.ToListAsync());
         }
     }
 }

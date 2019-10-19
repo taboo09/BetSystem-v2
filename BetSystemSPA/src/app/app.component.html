@@ -6,13 +6,11 @@
 </div>
 <div class="footer mt-5">
     <hr>
-    <small class="d-block mb-2" *ngIf="credentials">
-            Logged in: 
-            <i class="fas fa-desktop ml-2"></i> {{ credentials.pc }}
-            <i class="far fa-user ml-2"></i> {{ credentials.name }}
+    <img src="../favicon.ico" width="14" height="14">
+    <small>
+        BetSystem App - v{{ version }}  <i class="far fa-copyright ml-1"></i> 2019 {{year === 2019 ? '' : '- ' + year}}
+        All rights reserved.
     </small>
-    <small>BetSystem App - v{{ version }} - <i class="far fa-copyright"></i> 2019 {{year === 2019 ? '' : '- ' + year}}.
-        All rights reserved.</small>
     <p class="mt-2">
         <a class="px-2" href="https://github.com/taboo09"><i class="fab fa-github"></i></a>
         <a class="px-2" href="https://www.linkedin.com/in/mariusstanciu/"><i class="fab fa-linkedin"></i></a>

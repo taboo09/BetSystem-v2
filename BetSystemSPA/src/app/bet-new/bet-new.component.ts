@@ -29,9 +29,9 @@ export class BetNewComponent implements OnInit, AfterViewInit {
       private router: Router) { }
 
   ngOnInit() {
-    this.checkSeason();
     this.getTeams();
     this.createMatchForm();
+    this.checkSeason();
     setTimeout(() => {
       this.teamName.focus();
     }, 50);

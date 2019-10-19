@@ -22,6 +22,16 @@
           </div>
           <div class="form-group">
             <mat-form-field appearance="outline">
+              <mat-label>Select Country</mat-label>
+              <mat-select [formControl]="teamForm.get('country')" required>
+                <mat-option *ngFor="let country of countries" [value]="country">
+                  {{ country }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="outline">
               <mat-label>Comment</mat-label>
               <textarea matInput [formControl]="teamForm.get('comment')" maxlength="360" placeholder="Comment"></textarea>
             </mat-form-field>

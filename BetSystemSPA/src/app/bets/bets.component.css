@@ -15,9 +15,15 @@ td {
     color: lightpink;
     font-size: .88em;
 }
+td:nth-child(-n+4){
+    font-size: .87em;
+}
+.mat-cell{
+    padding-top: 4px;
+}
 
 i{
-    font-size: 1.15rem;
+    font-size: 1rem;
 }
 .fa-trash-alt, .fa-smile, .fa-frown{
     color: orangered;
@@ -53,4 +59,7 @@ div.d-inline{
 }
 .modal-content label.active{
     background: #362e3a;
+}
+.img-country{
+    cursor: pointer;
 }

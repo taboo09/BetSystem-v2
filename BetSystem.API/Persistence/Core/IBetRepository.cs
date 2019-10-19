@@ -14,5 +14,6 @@ namespace BetSystem.API.Persistence.Core
         Task<IEnumerable<object>> GetBetsAsync(int start, int size);
         Task<IEnumerable<object>> UnsettledBets();
         Task<IEnumerable<object>> AllBetsByTeamId(int teamId);
+        Task<IEnumerable<object>> AllBetsByCountry(string country);
     }
 }

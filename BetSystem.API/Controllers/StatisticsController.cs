@@ -45,5 +45,13 @@ namespace BetSystem.API.Controllers
         {
             return Ok(await _statisticsRepository.TeamsProfit());
         }
+
+        [HttpGet("countries")]
+        public async Task<IActionResult> GetCountriesStats()
+        {
+            var countries = await _statisticsRepository.CountriesStas();
+
+            return Ok(countries.OrderByDescending(x => x.Profit).ToList());
+        }
     }
 }

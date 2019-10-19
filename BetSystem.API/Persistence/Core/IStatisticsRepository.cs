@@ -10,5 +10,6 @@ namespace BetSystem.API.Persistence.Core
         Task<IEnumerable<DateStatusDto>> DateStatus();
         Task<StatisticsDto> Statistics();
         Task<IEnumerable<TeamProfitDto>> TeamsProfit();
+        Task<IEnumerable<CountryDto>> CountriesStas();
     }
 }

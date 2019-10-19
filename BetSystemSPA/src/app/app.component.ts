@@ -1,9 +1,7 @@
 import { AppService } from './_services/app.service';
-import { SnackBarService } from './_services/snack-bar.service';
 import { CurrencyService } from './_services/currency.service';
 import { Component, OnInit } from '@angular/core';
 import { currency } from './_models/currency';
-import { getCurrencySymbol } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -15,16 +13,13 @@ export class AppComponent implements OnInit{
   currency: currency;
   year = new Date().getFullYear();
   version:any;
-  credentials:any;
 
   constructor(private currencyService: CurrencyService,
-      private appService: AppService,
-      private snackBarService: SnackBarService) {}
+      private appService: AppService) {}
 
   ngOnInit(){
     this.getCurrency();
     this.getAppLastVersion();
-    this.getCredentials();
   }
 
   getCurrency(){
@@ -41,12 +36,5 @@ export class AppComponent implements OnInit{
       .subscribe(v => {
         this.version = v["value"];
       });
-  }
-
-  getCredentials(){ //works only in windows
-    this.appService.getCredentials()
-      .subscribe(c => {
-        this.credentials = c;
-      })
   }
 }

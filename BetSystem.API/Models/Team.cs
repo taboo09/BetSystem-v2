@@ -15,5 +15,8 @@ namespace BetSystem.API.Models
         [StringLength(255)]
         public string Comment { get; set; }
         public bool Enabled { get; set; } 
+
+        [StringLength(50)]
+        public string Country { get; set; }
     }
 }

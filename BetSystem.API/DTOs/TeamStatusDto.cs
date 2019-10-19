@@ -6,6 +6,7 @@ namespace BetSystem.API.DTOs
         public string Name { get; set; }
         public int Stars { get; set; }
         public string Comment { get; set; }
+        public string Country { get; set; }
         public bool Enabled { get; set; }
         public int MatchesPlayed { get; set; }
         public int MatchesWon { get; set; }

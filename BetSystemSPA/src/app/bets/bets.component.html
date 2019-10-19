@@ -25,6 +25,8 @@
     <ng-container matColumnDef="team">
       <th mat-header-cell *matHeaderCellDef> Team </th>
       <td mat-cell *matCellDef="let bet">
+        <img src="../../assets/img/Flags/{{ bet.country }}.png" class="mr-1 img-country" 
+          title="{{ bet.country }}" (click)="getBetsByCountry(bet.country)"  />
         <button class="btn btn-link px-0 btn-team" (click)="getBetsByTeamId(bet.teamId)"> {{ bet.team }} </button>
       </td>
     </ng-container>
@@ -57,12 +59,10 @@
     <ng-container matColumnDef="won">
       <th mat-header-cell *matHeaderCellDef> Won </th>
       <td mat-cell *matCellDef="let bet">
-        <!-- <i class="far fa-smile" *ngIf="bet.won == true" style="color: orange"></i>
-        <i class="far fa-frown" *ngIf="bet.won == false"></i> -->
         <span *ngIf="bet.won == true" style="color: orange">Yes</span>
         <span *ngIf="bet.won == false">No</span>
         <span *ngIf="bet.won == null">
-          <button class="btn btn-link px-0 pb-0" matTooltip="Edit Bet!" (click)="openBetDialog(betmodal, bet, 'edit');">
+          <button class="btn btn-link px-0 py-0" matTooltip="Edit Bet!" (click)="openBetDialog(betmodal, bet, 'edit');">
             <i class="far fa-edit"></i>
           </button>
         </span>
@@ -86,7 +86,7 @@
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef> </th>
       <td mat-cell *matCellDef="let bet"> 
-        <button class="btn btn-link" (click)="openBetDialog(betmodal, bet, 'delete');">
+        <button class="btn btn-link pt-0 pb-0" (click)="openBetDialog(betmodal, bet, 'delete');">
         <i class="fas fa-trash-alt"></i>
       </button> 
       </td>

@@ -3,4 +3,5 @@ export interface team{
     name: string;
     comment: string;
     enabled: boolean;
+    country: string;
 }

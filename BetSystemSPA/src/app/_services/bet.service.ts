@@ -37,16 +37,8 @@ export class BetService {
     return this.http.get<bet[]>(this.baseUrl + selection);
   }
 
-  getLast15Bets(){
-    return this.http.get<bet[]>(this.baseUrl + 'last15');
-  }
-
-  getLastDate(){
-    return this.http.get<bet[]>(this.baseUrl + 'lastdate');
-  }
-
-  getUnsettledBets(){
-    return this.http.get<bet[]>(this.baseUrl + 'unsettled');
+  getBetsByCountry(country: string){
+    return this.http.get<bet[]>(this.baseUrl + 'country/' + country);
   }
 
   addBet(bet: bet){

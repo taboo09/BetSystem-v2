@@ -1,6 +1,7 @@
 export interface teamStats {
     id: number;
     name: string;
+    country: string;
     stars: number;
     comment: string;
     enabled: boolean;

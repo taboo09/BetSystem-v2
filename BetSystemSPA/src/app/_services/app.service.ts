@@ -13,8 +13,4 @@ export class AppService {
   getAppVersion(){
     return this.http.get<Object>(this.baseUrl);
   }
-
-  getCredentials(){
-    return this.http.get<Object>(this.baseUrl + 'credentials');
-  }
 }

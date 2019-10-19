@@ -1,3 +1,4 @@
+import { CountryStats } from './../_models/countryStats';
 import { currency } from './../_models/currency';
 import { CurrencyService } from './../_services/currency.service';
 import { DatePipe } from '@angular/common';
@@ -17,6 +18,9 @@ export class StatisticsComponent implements OnInit {
   datesChart = [];
   profitChart = [];
   teamsChart = [];
+  countryBetsChart = [];
+  countryProfitChart = [];
+  countryPieChart = [];
   teamsProfit: teamProfit[];
   dates: dateStats[];
   totalProfit = [];
@@ -25,6 +29,7 @@ export class StatisticsComponent implements OnInit {
   backgroundColors = [];
   borderColors = [];
   rgbColors = ['255, 99, 132', '54, 162, 235', '255, 206, 86', '75, 192, 192', '255, 65, 54', '153, 102, 255', '255, 159, 64', '46, 204, 64'];
+  countries: CountryStats[];
 
   constructor(private statsService: StatsService,
       private currencyService: CurrencyService,
@@ -62,8 +67,15 @@ export class StatisticsComponent implements OnInit {
             this.createChartProfit();
             this.createChartDateStats(this.dates);
           }
-        })
-    }, 600);
+        });
+
+        this.statsService.getCountryStats()
+          .subscribe(countries => {
+            this.countries = countries;
+            this.createCountryProfitChart();
+            this.createCountryPieChart();
+          });
+    }, 50);
   }
 
   getSelectedCurrency(){
@@ -147,6 +159,8 @@ export class StatisticsComponent implements OnInit {
   }
 
   createChartDateStats(dates: dateStats[]){
+    var currency = this.currency.symbol != ' ' ? '(' + this.currency.symbol + ')' : ' ';
+
     this.datesChart = new Chart('datesChart', {
       type: 'bar',
       data: {
@@ -175,7 +189,8 @@ export class StatisticsComponent implements OnInit {
             label: function(tooltipItem, data) {
               if(tooltipItem.datasetIndex == 1) {
                 var profit = dates.map(x => x.profit)[tooltipItem.index];
-                return [data.datasets[tooltipItem.datasetIndex].label + ":  " + tooltipItem.yLabel , 'Profit '  + profit]
+                return [data.datasets[tooltipItem.datasetIndex].label + ":  " + tooltipItem.yLabel , 
+                  'Profit ' + currency + ' ' + profit]
               }
               return data.datasets[tooltipItem.datasetIndex].label + ":  " + tooltipItem.yLabel
             },
@@ -229,4 +244,121 @@ export class StatisticsComponent implements OnInit {
     }
   }
 
+  createCountryProfitChart(){
+    var profitList = this.countries.map(x => x.profit);
+    var currency = this.currency.symbol != ' ' ? '(' + this.currency.symbol + ')' : ' ';
+
+    this.countryProfitChart = new Chart('countryProfit', {
+      type: 'bar',
+      data: {
+        labels: this.countries.map(x => x.countryName),
+        datasets: [{
+          label: 'Money Bet' + (this.currency.symbol != ' ' ? '(' + this.currency.symbol + ')' : ' '),
+          data: this.countries.map(x => x.moneyBet),
+          backgroundColor: 'rgba(' + this.rgbColors[4] + ', 0.35)',
+          borderColor: 'rgba(' + this.rgbColors[3] + ', 1)',
+          borderWidth: 1
+        },
+        {
+          label: 'Money Earn' + (this.currency.symbol != ' ' ? '(' + this.currency.symbol + ')' : ' '),
+          data: this.countries.map(x => x.moneyEarn),
+          backgroundColor: 'rgba(' + this.rgbColors[1] + ', 0.35)',
+          borderColor: 'rgba(' + this.rgbColors[3] + ', 1)',
+          borderWidth: 1
+        }
+      ]
+      },
+      options: {
+        tooltips:{
+          mode: 'label',
+          titleSpacing: 5,
+          bodySpacing: 5,
+          callbacks: {
+            label: function(tooltipItem, data) {
+              if(tooltipItem.datasetIndex == 1) {
+                var profit = profitList[tooltipItem.index];
+                return [data.datasets[tooltipItem.datasetIndex].label + ":  " + tooltipItem.yLabel ,
+                   'Profit ' + currency + ' ' + profit]
+              }
+              return data.datasets[tooltipItem.datasetIndex].label + ":  " + tooltipItem.yLabel
+            },
+            labelColor: function(tooltipItem, chart) {
+              return {
+                  backgroundColor: tooltipItem.datasetIndex == 0 ? 'rgba(255, 65, 54, .85)' : 'rgba(54, 162, 235, .95)'
+              } 
+            }
+          }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }],
+            xAxes: [{
+                ticks: {
+                    stepSize: 1,
+                    autoSkip: false
+                }
+            }]
+        }
+      }
+    });
+  }
+
+  setCountriesRGBAColor(a: number){
+    a = a < 0.35 ? 0.35 : a > 1 ? 1 : a;
+    let index = 2;
+    let colors = [];
+  
+    this.countries.forEach(element => {
+      if (index >= this.rgbColors.length) index = 0;
+      colors.push('rgba(' + this.rgbColors[index] + ',' + a +')');
+
+      index++;
+    });
+
+    return colors;
+  }
+
+  createCountryPieChart(){
+    this.countryPieChart = new Chart('countryTeams',{
+      type: 'pie',
+      data: {
+        labels: this.countries.map(x => x.countryName),
+        datasets: [{
+          data: this.countries.map(x => x.nrTeams),
+          backgroundColor: this.setCountriesRGBAColor(0.35),
+          borderColor: '#372450',
+          borderWidth: 3,
+          hoverBackgroundColor: this.setCountriesRGBAColor(0.45),  
+          hoverBorderColor: '#372450'  
+        }]
+      },
+      options: {
+          responsive: true,
+          sliceSpace: 4,
+          maintainAspectRatio : true,
+          aspectRatio: 1,
+          title: {
+            display: true,
+            position: "top",
+            text: "Nr of bets per country"
+          },
+          legend: {
+              display: true,
+              position: "bottom",
+              labels: {
+                  fontColor: "#fff",
+              }
+          },
+          tooltips: {
+            position: "average",
+            yAlign: "top"
+          }
+        }
+    });
+  }
 }

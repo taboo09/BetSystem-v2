@@ -7,6 +7,7 @@ namespace BetSystem.API.DTOs
         public int Id { get; set; }
         public int TeamId { get; set; }
         public string Team { get; set; } 
+        public string Country { get; set; }
         public string Home { get; set; }
         public string Away { get; set; }
         public DateTime Date { get; set; }

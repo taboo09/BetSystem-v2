@@ -9,7 +9,9 @@ namespace BetSystem.API.Mapping
         public MapperProfile()
         {
             // Domain to API Resources
-            CreateMap<Bet, BetDto>().ForMember(x =>x.Team, y => y.MapFrom(z => z.Team.Name));
+            CreateMap<Bet, BetDto>()
+                .ForMember(x => x.Team, y => y.MapFrom(z => z.Team.Name))
+                .ForMember(x => x.Country, y => y.MapFrom(z => z.Team.Country));
             CreateMap<Team, TeamDto>();
 
             // API Resouces to Domain

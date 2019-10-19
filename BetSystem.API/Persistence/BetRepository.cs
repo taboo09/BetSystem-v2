@@ -73,6 +73,7 @@ namespace BetSystem.API.Persistence
                 Id = x.Id,
                 TeamId = x.TeamId,
                 Team = x.Team.Name,
+                Country = x.Team.Country,
                 Home = x.Home,
                 Away = x.Away,
                 Date = x.Date,
@@ -91,6 +92,7 @@ namespace BetSystem.API.Persistence
                 Id = x.Id,
                 TeamId = x.TeamId,
                 Team = x.Team.Name,
+                Country = x.Team.Country,
                 Home = x.Home,
                 Away = x.Away,
                 Date = x.Date,
@@ -109,6 +111,26 @@ namespace BetSystem.API.Persistence
                 Id = x.Id,
                 TeamId = x.TeamId,
                 Team = x.Team.Name,
+                Country = x.Team.Country,
+                Home = x.Home,
+                Away = x.Away,
+                Date = x.Date,
+                Stake = x.Stake,
+                Odd = x.Odd,
+                Won = x.Won,
+                Withdrawal = x.Withdrawal,
+                CashReturn = x.CashReturn,
+                Profit = x.Profit
+            }).OrderBy(x => x.Date).ToListAsync();
+        }
+
+        public async Task<IEnumerable<object>> AllBetsByCountry(string country)
+        {
+            return await _context.Bets.Where(x => x.Team.Season.Selected && x.Team.Country == country).Select(x => new {
+                Id = x.Id,
+                TeamId = x.TeamId,
+                Team = x.Team.Name,
+                Country = x.Team.Country,
                 Home = x.Home,
                 Away = x.Away,
                 Date = x.Date,
