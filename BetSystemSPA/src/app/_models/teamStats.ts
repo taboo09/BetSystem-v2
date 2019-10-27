@@ -5,6 +5,7 @@ export interface teamStats {
     stars: number;
     comment: string;
     enabled: boolean;
+    lastDate: Date;
     matchesPlayed: number;
     matchesWon: number;
     percentage: number;

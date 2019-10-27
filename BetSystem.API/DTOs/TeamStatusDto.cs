@@ -1,3 +1,5 @@
+using System;
+
 namespace BetSystem.API.DTOs
 {
     public class TeamStatusDto
@@ -8,6 +10,7 @@ namespace BetSystem.API.DTOs
         public string Comment { get; set; }
         public string Country { get; set; }
         public bool Enabled { get; set; }
+        public DateTime? LastDate { get; set; }
         public int MatchesPlayed { get; set; }
         public int MatchesWon { get; set; }
         public double Percentage { get; set; }

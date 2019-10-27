@@ -28,7 +28,8 @@ namespace BetSystem.API.Persistence
                 Id = x.Id,
                 Stake = x.Stake,
                 Won = x.Won,
-                Profit = x.Profit
+                Profit = x.Profit,
+                Date = x.Date
             }).ToListAsync();
 
             var teamStatus = new TeamStatusDto();
@@ -38,6 +39,8 @@ namespace BetSystem.API.Persistence
             teamStatus.Comment = team.Comment;
             teamStatus.Country = team.Country;
             teamStatus.Enabled = team.Enabled;
+            teamStatus.LastDate = listOfBets.Any() ? listOfBets.OrderBy(x => x.Date).LastOrDefault().Date : 
+                (DateTime?)null;
             teamStatus.MatchesPlayed = listOfBets.Count();
             teamStatus.MatchesWon = listOfBets.Where(x => x.Won == true).Count();
             teamStatus.Percentage = teamStatus.MatchesWon > 0 ?

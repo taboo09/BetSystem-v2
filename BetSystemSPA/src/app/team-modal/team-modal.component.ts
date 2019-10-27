@@ -95,8 +95,8 @@ export class TeamModalComponent implements OnInit {
            'Money Earn ' + (this.currency.symbol != ' ' ? '(' + this.currency.symbol + ')' : ' ')],
         datasets: [{
           data: [this.teamStats.moneyBet, this.teamStats.moneyEarn],
-          backgroundColor: ['rgba(' + this.rgbColors[4] + ', 0.35)', 'rgba(' + this.rgbColors[1] + ', 0.35)'],
-          borderColor: ['rgba(' + this.rgbColors[2] + ', .7)', 'rgba(' + this.rgbColors[2] + ', .7)'],
+          backgroundColor: ['rgba(' + this.rgbColors[4] + ', 0.4)', 'rgba(' + this.rgbColors[1] + ', 0.4)'],
+          borderColor: 'transparent',
           borderWidth: 1
         }]
       },

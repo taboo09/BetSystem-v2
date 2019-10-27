@@ -2,8 +2,6 @@
   <img src="assets/img/soccer-content.jpg" class="img-cover">
 </div>
 
-
-
 <div class="container">
   <h5 mat-dialog-title>
     {{ team.name }}
@@ -75,12 +73,17 @@
               </td>
             </tr>
             <tr>
-              <th>Total Bet</th>
+              <th>Last Bet Date</th>
+              <td *ngIf="teamStats.lastDate">{{ teamStats.lastDate | date }}</td>
+              <td *ngIf="!teamStats.lastDate">-</td>
+            </tr>
+            <tr>
+              <th>Total</th>
               <td>
                 <table class="table-sm text-center mx-auto">
                   <tr>
-                    <td>Total Bet</td>
-                    <td>Total Earn</td>
+                    <td>Bet</td>
+                    <td>Earn</td>
                   </tr>
                   <tr>
                     <td>{{ teamStats.moneyBet | currency: currency.symbol:'code':'1.0-2' }}</td>
