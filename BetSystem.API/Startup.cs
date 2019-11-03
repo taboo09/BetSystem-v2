@@ -56,6 +56,7 @@ namespace BetSystem.API
             }
             else
             {
+                app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
 
