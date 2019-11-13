@@ -9,7 +9,7 @@ import { BsDropdownModule, BsModalService, ModalModule, ButtonsModule } from 'ng
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
-import { MatInputModule, MatButtonModule, MatIconModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatCheckboxModule, MatRadioModule, MatTooltipModule, MatDialogModule, MatProgressSpinnerModule, MatSnackBarModule, MatCardModule, MatSlideToggleModule, MatExpansionModule } from '@angular/material';
+import { MatInputModule, MatButtonModule, MatIconModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatCheckboxModule, MatRadioModule, MatTooltipModule, MatDialogModule, MatProgressSpinnerModule, MatSnackBarModule, MatCardModule, MatSlideToggleModule, MatExpansionModule, MatBottomSheetModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -29,6 +29,7 @@ import { HomeComponent } from './home/home.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { DatePipe } from '@angular/common';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { InfoRulesComponent } from './info-rules/info-rules.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     TeamModalComponent,
     AdminComponent,
     StatisticsComponent,
-    HomeComponent
+    HomeComponent,
+    InfoRulesComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +74,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     ModalModule,
     MatExpansionModule,
     InfiniteScrollModule,
+    MatBottomSheetModule,
     ButtonsModule.forRoot(),
     RouterModule.forRoot(appRoutes, {
       scrollPositionRestoration: 'enabled'
@@ -88,7 +91,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     ErrorInterceptorProvider
   ],
   entryComponents: [
-    TeamModalComponent
+    TeamModalComponent,
+    InfoRulesComponent
   ],
   bootstrap: [AppComponent]
 })

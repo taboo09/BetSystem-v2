@@ -42,3 +42,7 @@ h1 span span {
 p.lead i{
     font-size: 1.2em;
 }
+.fa-comment-dots{
+    font-size: 1.2em;
+    cursor: pointer;
+}

@@ -120,3 +120,11 @@ mat-dialog-container, .modal-content{
 .cdk-overlay-pane{
     position: absolute !important;
 }
+
+/* bottom sheet */
+.mat-bottom-sheet-container{
+    background-color: #372450;
+    color: cyan;
+    opacity: .95;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
