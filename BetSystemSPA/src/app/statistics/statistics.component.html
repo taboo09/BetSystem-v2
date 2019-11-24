@@ -8,21 +8,28 @@
 <div>
   <canvas id="teamsChart" style="width: auto; height: 550px"></canvas>
 </div>
-<div class="mt-4" *ngIf="showDatesChart">
-  <canvas id="profitChart" style="width: auto; height: 550px"></canvas>
+
+<div class="chart-wrapper" #chartWrapper>
+  <div class="mt-4" *ngIf="showDatesChart" [style.width]="newChartWidth === 0 ? 'inherit' : newChartWidth + 'px'">
+    <canvas id="profitChart" style="width: auto; height: 550px"></canvas>
+  </div>
 </div>
-<div class="mt-4" *ngIf="showDatesChart">
-  <canvas id="datesChart" style="width: auto; height: 550px"></canvas>
+
+<div class="chart-wrapper" #chartWrapper2>
+  <div class="mt-4 dates-chart" *ngIf="showDatesChart" [style.width]="newChartWidth === 0 ? 'inherit' : newChartWidth + 'px'">
+    <canvas id="datesChart" style="width: auto; height: 550px"></canvas>
+  </div>
 </div>
-  <div class="container mt-3">
-    <div class="row">
-      <div class="col col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
-        <canvas id="countryProfit" style="width: auto; height: 400px"></canvas>
+
+<div class="container">
+  <div class="row mt-5">
+    <div class="col col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
+      <canvas id="countryProfit" style="width: auto; height: 400px"></canvas>
+    </div>
+    <div class="col col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
+      <div class="country-chart mt-md-3 mt-sm-3 mt-xs-3 mt-0">
+        <canvas id="countryTeams"></canvas>
       </div>
-      <div class="col col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
-        <div class="country-chart mt-md-3 mt-sm-3 mt-xs-3 mt-0">
-          <canvas id="countryTeams"></canvas>
-        </div>
-      </div>
+    </div>
   </div>
 </div>

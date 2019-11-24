@@ -5,7 +5,7 @@ import { DatePipe } from '@angular/common';
 import { dateStats } from './../_models/dateStats';
 import { teamProfit } from './../_models/teamProfit';
 import { StatsService } from './../_services/stats.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Chart } from 'chart.js';
 import { SnackBarService } from '../_services/snack-bar.service';
 
@@ -15,6 +15,7 @@ import { SnackBarService } from '../_services/snack-bar.service';
   styleUrls: ['./statistics.component.css']
 })
 export class StatisticsComponent implements OnInit {
+  MAX_DT_LENGTH = 60;
   datesChart = [];
   profitChart = [];
   teamsChart = [];
@@ -30,6 +31,10 @@ export class StatisticsComponent implements OnInit {
   borderColors = [];
   rgbColors = ['255, 99, 132', '54, 162, 235', '255, 206, 86', '75, 192, 192', '255, 65, 54', '153, 102, 255', '255, 159, 64', '46, 204, 64'];
   countries: CountryStats[];
+  newChartWidth = 0;
+
+  @ViewChild('chartWrapper') chartWrapper: ElementRef;
+  @ViewChild('chartWrapper2') chartWrapper2: ElementRef;
 
   constructor(private statsService: StatsService,
       private currencyService: CurrencyService,
@@ -38,7 +43,6 @@ export class StatisticsComponent implements OnInit {
   ngOnInit() {
     this.getSelectedCurrency();
     this.getData();
-   
   }
 
   getData(){
@@ -63,6 +67,7 @@ export class StatisticsComponent implements OnInit {
           this.dates.forEach(d => d.date = datePipe.transform(d.date, 'dd/MM/yy'));
           if(this.dates.length > 0) {
             this.showDatesChart = true; // display dates canvas
+            this.setCanvasWrapperWidth(); // set the width of the canvas 
             this.setTotalProfit(this.dates);
             this.createChartProfit();
             this.createChartDateStats(this.dates);
@@ -90,7 +95,6 @@ export class StatisticsComponent implements OnInit {
         labels: this.teamsProfit.map(x => x.name),
         datasets: [{
           label: 'Team / Profit ' + (this.currency.symbol != ' ' ? '(' + this.currency.symbol + ')' : ' '),
-          // label: 'Team / Profit' + this.currency.symbol,
           data: this.teamsProfit.map(x => x.profit),
           backgroundColor: this.backgroundColors,
           borderColor: this.borderColors,
@@ -98,6 +102,10 @@ export class StatisticsComponent implements OnInit {
         }]
       },
       options: {
+        legend: {
+          position: 'top',
+          align: 'start'
+        },
         responsive: true,
         maintainAspectRatio: false,
         scales: {
@@ -113,7 +121,15 @@ export class StatisticsComponent implements OnInit {
                 }
             }]
         }
-      }
+      },
+      // set the legend height
+      plugins: [{
+        beforeInit: function(chart, options) {
+          chart.legend.afterFit = function() {
+            this.height = this.height + 15;
+          };
+        }
+      }]
     });
   }
 
@@ -146,15 +162,27 @@ export class StatisticsComponent implements OnInit {
         }]
       },
       options: {
+        legend: {
+          position: 'top',
+          align: 'start'
+        },
         responsive: true,
-        maintainAspectRatio : true,
+        maintainAspectRatio : false,
         aspectRatio: 1,
         scales: {
             yAxes: [{
                 stacked: true
             }]
         }
-      }
+      },
+      // set the legend height
+      plugins: [{
+        beforeInit: function(chart, options) {
+          chart.legend.afterFit = function() {
+            this.height = this.height + 15;
+          };
+        }
+      }]
     });
   }
 
@@ -181,6 +209,10 @@ export class StatisticsComponent implements OnInit {
         }]
       },
       options: {
+        legend: {
+          position: 'top',
+          align: 'start'
+        },
         tooltips: {
           mode: 'label',
           titleSpacing: 5,
@@ -219,7 +251,15 @@ export class StatisticsComponent implements OnInit {
                 stacked: true
             }]
         }
-      }
+      },
+      // set the legend height
+      plugins: [{
+        beforeInit: function(chart, options) {
+          chart.legend.afterFit = function() {
+            this.height = this.height + 15;
+          };
+        }
+      }]
     })
   }
 
@@ -360,5 +400,18 @@ export class StatisticsComponent implements OnInit {
           }
         }
     });
+  }
+
+  setCanvasWrapperWidth(){
+    if (this.dates.length > this.MAX_DT_LENGTH) {
+      let containerWidth = this.chartWrapper.nativeElement.offsetWidth;
+
+      // set the width to the first div that wrapps the ccanvas
+      this.newChartWidth = containerWidth + (this.dates.length - this.MAX_DT_LENGTH) * 12;
+
+      // add overflowX class to the chartWrapper element
+      this.chartWrapper.nativeElement.classList.add('overflowX');
+      this.chartWrapper2.nativeElement.classList.add('overflowX');
+    }
   }
 }

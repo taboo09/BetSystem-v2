@@ -4,3 +4,31 @@
     max-height: 350px;
     margin: 0 auto;
 }
+
+.chart-wrapper{
+    width: inherit;
+    margin: 1.4em 0;
+    padding-bottom: .5em;
+}
+
+.overflowX{
+    overflow-x: scroll;
+    scrollbar-width: thin;
+    scrollbar-color:  #e4e4e4 #372450;
+}
+
+/* scrollbar for Chrome */
+.overflowX::-webkit-scrollbar{
+    height: 8px;
+    background: #372450;
+}
+.overflowX::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: linear-gradient(to left, #fff, #e4e4e4);
+    border: 1px solid #aaa;
+}
+.overflowX::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: #372450;
+    /* box-shadow: 0 0 1px 1px #372450, inset 0 0 4px rgba(0,0,0,0.3); */
+}
