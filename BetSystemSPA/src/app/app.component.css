@@ -1,0 +1,17 @@
+.sticky{
+    position: fixed;
+    top: 38%;
+    left: -15px;
+    padding: .5rem .75rem .5em calc(.75rem + 10px);
+    border: 1px solid cyan;
+    border-radius: 20%;
+    color: cyan;
+    cursor: pointer;
+}
+.sticky > *{
+    font-size: 1.05em;
+}
+.sticky:hover{
+    background-color: cyan;
+    color: darkred;
+}

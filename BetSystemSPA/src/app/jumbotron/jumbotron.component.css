@@ -1,7 +1,6 @@
 .jumbotron{
     position: relative;
     padding-bottom: 1.5rem;
-    padding-top: 5rem;
 }
 .bg-overlay-primary:after{
     content: " ";
@@ -32,17 +31,16 @@
     color:cyan;
 }
 
-h1 span {
+h2 span {
     font-size: .8em;
     font-weight: 400;
 }
-h1 span span {
+h2 span span {
     font-size: .7em;
+}
+p.lead{
+    font-size: 1rem;
 }
 p.lead i{
     font-size: 1.2em;
-}
-.fa-comment-dots{
-    font-size: 1.2em;
-    cursor: pointer;
 }

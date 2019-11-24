@@ -117,6 +117,14 @@ mat-dialog-container, .modal-content{
     border-color: orange;
 } 
 
+/* set prefix top only for Mozilla browser */
+@-moz-document url-prefix() {
+    .mat-form-field-appearance-outline .mat-form-field-prefix, 
+    .mat-form-field-appearance-outline .mat-form-field-suffix{
+        top: .55em !important;
+    }
+}
+
 .cdk-overlay-pane{
     position: absolute !important;
 }

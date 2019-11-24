@@ -3,11 +3,11 @@
     <img src="assets/img/soccer-header.jpg" class="img-cover">
   </div>
   <div class="container">
-    <h1 class="display-7">{{ pageName }}
+    <h2>{{ pageName }}
       <span *ngIf="pageName == 'BETS'">: {{ noBets }}
         <span *ngIf="noUnsettled > 0">({{ noUnsettled }})</span>
       </span>
-    </h1>
+    </h2>
     <p class="lead" *ngIf="!season">Season Name: No season to be found!</p>
     <p class="lead" *ngIf="season">Season Name: {{ season?.name }}</p>
     <p class="lead">Season Active:
@@ -16,9 +16,6 @@
     </p>
     <small>
       <q>{{ quotes[index] }}</q>
-    </small>
-    <small class="d-block mt-3">
-      <i class="far fa-comment-dots" matTooltip="Season Advices" (click)="openInfoRules()"></i>
     </small>
   </div>
 </div>

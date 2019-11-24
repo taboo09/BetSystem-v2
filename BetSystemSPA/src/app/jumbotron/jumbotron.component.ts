@@ -3,8 +3,6 @@ import { Season } from './../_models/season';
 import { SeasonService } from './../_services/season.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatBottomSheet } from '@angular/material';
-import { InfoRulesComponent } from '../info-rules/info-rules.component';
 
 @Component({
   selector: 'app-jumbotron',
@@ -22,8 +20,7 @@ export class JumbotronComponent implements OnInit {
   constructor(private seasonService: SeasonService,
     private betService: BetService,
     private route: ActivatedRoute,
-    private router: Router,
-    private _bottomSheet: MatBottomSheet) { }
+    private router: Router) { }
 
   ngOnInit() {
     this.getSeason();
@@ -60,9 +57,5 @@ export class JumbotronComponent implements OnInit {
       }
       this.pageName = page.toUpperCase();
     });
-  }
-
-  openInfoRules(){
-    this._bottomSheet.open(InfoRulesComponent)
   }
 }
