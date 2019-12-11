@@ -6,7 +6,6 @@ using BetSystem.API.DTOs;
 using BetSystem.API.Models;
 using BetSystem.API.Persistence.Core;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BetSystem.API.Controllers
 {
@@ -114,16 +113,16 @@ namespace BetSystem.API.Controllers
                     listOfBets[i].TeamId = new_teamId;
                     listOfBets[i].Id = 0;
                     newListOfBets.Add(listOfBets[i]);
+
+                    // keep the order of the bets
+                    // addrange does not maintain the order
+                    _appRepository.Add(listOfBets[i]);
                 }
+
+                await _unitOfWork.SaveAll();
             }
 
-            newListOfBets = newListOfBets.OrderBy(x => x.Date).ToList();
-
-            _appRepository.AddRange<Bet>(newListOfBets);
-
-            await _unitOfWork.SaveAll();
-
-            return Ok();
+            return Ok("Data has ben transfered");
         }
     }
 }
