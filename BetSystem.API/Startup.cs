@@ -26,10 +26,10 @@ namespace BetSystem.API
         {
             // services.AddDbContext<BetDbContext>(x => 
                 // x.UseLazyLoadingProxies().UseSqlite(Configuration.GetConnectionString("Default-sqllite")));
-            services.AddDbContext<BetDbContext>(x => 
-                x.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("Default-sql")));
             // services.AddDbContext<BetDbContext>(x => 
-            //  x.UseLazyLoadingProxies().UseMySql(Configuration.GetConnectionString("Default-mysql")));
+            //     x.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("Default-sql")));
+            services.AddDbContext<BetDbContext>(x => 
+             x.UseLazyLoadingProxies().UseMySql(Configuration.GetConnectionString("Default-mysql")));
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

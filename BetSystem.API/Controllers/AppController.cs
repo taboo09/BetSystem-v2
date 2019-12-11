@@ -11,7 +11,7 @@ namespace BetSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AppController:ControllerBase 
+    public class AppController : ControllerBase 
     {
         private readonly IAppRepository _appRepository; 
         private readonly IUnitOfWork _unitOfWork; 

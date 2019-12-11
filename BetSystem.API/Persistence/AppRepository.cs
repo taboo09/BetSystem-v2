@@ -20,6 +20,11 @@ namespace BetSystem.API.Persistence
             _context.Add(entity);
         }
 
+        public void AddRange<T>(List<T> entities) where T : class
+        {
+            _context.AddRange(entities);
+        }
+
         public async Task<T> FindLast<T>() where T : class
         {
             return await _context.Set<T>().AsNoTracking().LastOrDefaultAsync();
