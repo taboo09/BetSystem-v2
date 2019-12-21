@@ -10,7 +10,7 @@
 
 
 body, html {
-    font-size: .95em;
+    font-size: 14px;
     /* font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     /* background-color: #2d283e;  */
@@ -19,6 +19,12 @@ body, html {
     background-color: #372450;
     color: #ffffff;
 }
+@media only screen and (max-width: 420px) {
+    body {
+      font-size: 12px;
+    }
+  }
+
 tr.mat-row{
     height: 30px !important;
 }
