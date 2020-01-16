@@ -61,7 +61,7 @@ namespace BetSystem.API.Persistence
                     var countBets = await _context.Bets.Where(x => x.Team.Season.Selected).CountAsync();
                     if (countBets > 0) {
                         var lastDate = (await _context.Bets.Where(x => x.Team.Season.Selected).OrderBy(x => x.Date).LastAsync()).Date;
-                        size = await _context.Bets.Where(x => x.Date == lastDate).CountAsync();
+                        size = await _context.Bets.Where(x => x.Date.Date == lastDate.Date).CountAsync();
                         start = countBets - size;
                     } 
                     break;
