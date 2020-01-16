@@ -28,13 +28,9 @@ namespace BetSystem.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(BetDto betDto)
         {
-           // Ignore UTC format for diffent time zones
-            betDto.Date = DateTime.Parse(betDto.Date_Text);
-
             var bet = _mapper.Map<Bet>(betDto);
 
             bet.CashReturn = Math.Round(bet.Odd * bet.Stake, 2);
-            bet.Date = bet.Date.Date;
 
             if (await _betRepository.AddBet(bet))
             {

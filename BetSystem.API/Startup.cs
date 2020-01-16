@@ -1,7 +1,7 @@
 ﻿using BetSystem.API.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,12 +27,14 @@ namespace BetSystem.API
             // services.AddDbContext<BetDbContext>(x => 
                 // x.UseLazyLoadingProxies().UseSqlite(Configuration.GetConnectionString("Default-sqllite")));
             services.AddDbContext<BetDbContext>(x => 
-                x.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("Default-sql")));
+            {
+                x.UseLazyLoadingProxies();
+                x.UseSqlServer(Configuration.GetConnectionString("Default-sql"));
+            });
             // services.AddDbContext<BetDbContext>(x => 
             //  x.UseLazyLoadingProxies().UseMySql(Configuration.GetConnectionString("Default-mysql")));
 
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddControllers();
 
             services.AddAutoMapper(typeof(Startup)); 
             services.AddCors();
@@ -48,9 +50,9 @@ namespace BetSystem.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, SeedData seeder)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedData seeder)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() )
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -62,6 +64,8 @@ namespace BetSystem.API
 
             // seed currencies and app version table
             seeder.Seed();
+
+            app.UseRouting();
             
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
             app.UseForwardedHeaders(new ForwardedHeadersOptions
@@ -69,20 +73,13 @@ namespace BetSystem.API
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
-
             app.UseDefaultFiles();
             app.UseStaticFiles();
-            app.UseMvc(routes => {
-                routes.MapSpaFallbackRoute(
-                    name: "spa-fallback",
-                    defaults: new { controller = "Fallback", action = "Index"}
-                );
+
+            app.UseEndpoints(endpoints => 
+            {
+                endpoints.MapControllers();
+                endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
     }
