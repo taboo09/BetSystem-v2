@@ -90,12 +90,10 @@ export class TeamComponent implements OnInit {
     setTimeout( () => { // display the btns colors
       let colors = ['success', 'warning', 'primary', 'danger', 'secondary', 'info', 'light', 'dark'];
       let btns = document.getElementsByClassName('colorBtn') as HTMLCollectionOf<HTMLElement>;
-      let indexColor = 0;
 
       for (let i = 0; i < btns.length; i++) {
-        if (indexColor >= colors.length) indexColor = 0;
-        btns[i].classList.add('btn-' + colors[indexColor].toString());
-        indexColor++;
+        var random = this.getRandomInt(colors.length);
+        btns[i].classList.add('btn-' + colors[random].toString());
       }
     });
   }
@@ -124,5 +122,9 @@ export class TeamComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       // console.log('The dialog was closed');
     });
+  }
+
+  getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
   }
 }

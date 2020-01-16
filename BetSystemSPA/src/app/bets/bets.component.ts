@@ -152,13 +152,16 @@ export class BetsComponent implements OnInit {
 
   modalConfirm(): void {
     if (this.state === 'edit') {
-      let betToUpdate = {} as betUpdate;
-      betToUpdate.id = this.bet.id;
-      Object.assign(betToUpdate, this.editForm.value);
+      let betUpdate: betUpdate = {
+        id: this.bet.id,
+        won: JSON.parse(this.editForm.get('won').value),
+        withdrawal: +this.editForm.get('withdrawal').value
+      };
+
       this.betsCount.unsettled--;
-      this.betService.editBet(betToUpdate)
+      this.betService.editBet(betUpdate)
         .subscribe( next => {
-          let messageType = String(betToUpdate.won) == "true" ? 'message' : 'confirm';
+          let messageType = String(betUpdate.won) == "true" ? 'message' : 'confirm';
           this.snackBarService.snackBarMessage(next['message'], "Ok", messageType);
           this.displayBetsAfterConfirm();
           this.sharedServiceBetsCount(this.betsCount.count, this.betsCount.unsettled);

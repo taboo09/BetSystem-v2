@@ -143,10 +143,10 @@
                 <div class="form-group">
                   <div class="btn-group" btnRadioGroup>
                     <label class="btn btn-secondary px-4 w-50" btnRadio="true">
-                      <input type="radio" id="won" formControlName="won" value="true" hidden> Yes
+                      <input type="radio" formControlName="won" value="true" hidden> Yes
                     </label>
                     <label class="btn btn-secondary px-4 w-50" btnRadio="false">
-                      <input type="radio" id="won" formControlName="won" value="false" hidden> No
+                      <input type="radio" formControlName="won" value="false" hidden> No
                     </label>
                   </div>
                 </div>
@@ -171,7 +171,7 @@
       <button type="submit" mat-flat-button color="primary" (click)="modalConfirm()" *ngIf="state === 'edit'" 
         [disabled]="!editForm.dirty || editForm.invalid">Save</button>
       <button type="button" mat-flat-button color="primary" (click)="modalConfirm()" *ngIf="state === 'delete'">Delete</button>
-      <button type="button" mat-flat-button color="warn" (click)="modalCancel()">Cancel</button>
+      <button type="button" mat-flat-button color="warn" class="ml-2" (click)="modalCancel()">Cancel</button>
     </div>
   </div>
 </ng-template>

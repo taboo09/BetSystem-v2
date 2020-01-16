@@ -6,6 +6,7 @@ table {
 .modal-content table, .modal-content td, .modal-content th {
     border: none;
     font-weight: 400;
+    color: cyan;
 }
 .modal-header, .modal-footer{
     border: none;

@@ -41,7 +41,7 @@ export class BetService {
     return this.http.get<bet[]>(this.baseUrl + 'country/' + country);
   }
 
-  addBet(bet: bet){
+  addBet(bet: object){
     return this.http.post<object>(this.baseUrl, bet);
   }
 

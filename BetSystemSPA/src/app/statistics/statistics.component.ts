@@ -5,9 +5,11 @@ import { DatePipe } from '@angular/common';
 import { dateStats } from './../_models/dateStats';
 import { teamProfit } from './../_models/teamProfit';
 import { StatsService } from './../_services/stats.service';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Chart } from 'chart.js';
 import { SnackBarService } from '../_services/snack-bar.service';
+import {Component, Directive, Input, ViewChild} from '@angular/core';
+import { ElementRef } from '@angular/core';
+import { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-statistics',
@@ -33,8 +35,8 @@ export class StatisticsComponent implements OnInit {
   countries: CountryStats[];
   newChartWidth = 0;
 
-  @ViewChild('chartWrapper') chartWrapper: ElementRef;
-  @ViewChild('chartWrapper2') chartWrapper2: ElementRef;
+  @ViewChild('chartWrapper', {static: false}) chartWrapper: ElementRef;
+  @ViewChild('chartWrapper2', {static: false}) chartWrapper2: ElementRef;
 
   constructor(private statsService: StatsService,
       private currencyService: CurrencyService,

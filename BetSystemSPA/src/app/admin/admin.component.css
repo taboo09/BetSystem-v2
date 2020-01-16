@@ -39,6 +39,12 @@ a i.far{
 .modal-body table tbody tr:first-child td span {
     font-size: 1.1em;
 }
+.modal-body th{
+    color: cyan;
+}
 mat-expansion-panel{
     background: transparent;
+}
+mat-expansion-panel button, .modal-footer button{
+    width: 100px;
 }

@@ -26,7 +26,7 @@
     position: relative;
 }
 .form-group i{
-    font-size: 2em;
+    font-size: 1.2em;
 }
 .stars i{
     font-size: 1.3em;
@@ -50,6 +50,7 @@
 table, th, td {
     border: none;
     font-weight: 400;
+    color: cyan;
 }
 tr.font-lg td {
     font-size: 1.3em;
@@ -58,6 +59,9 @@ tr.font-lg td {
 .mat-dialog-content{
     max-height: fit-content;
     overflow: hidden;
+}
+.mat-dialog-actions button{
+    width: 100px;
 }
 
 .chart-team{

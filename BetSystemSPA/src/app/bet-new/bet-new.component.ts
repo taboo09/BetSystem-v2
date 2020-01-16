@@ -19,7 +19,7 @@ export class BetNewComponent implements OnInit, AfterViewInit {
   matchForm: FormGroup;
   teams: team[];
   season: any = {};
-  @ViewChild('teamName') teamName: MatSelect;
+  @ViewChild('teamName', {static: false}) teamName: MatSelect;
   
   constructor(private betService: BetService,
       private teamService: TeamService,
@@ -62,10 +62,16 @@ export class BetNewComponent implements OnInit, AfterViewInit {
 
   AddBet(){
     if (this.matchForm.valid){
-      this.bet = Object.assign({}, this.matchForm.value);
-      // Getting date string format to ignore UTC
-      this.bet.date_text = this.bet.date.toLocaleDateString();
-      this.betService.addBet(this.bet)
+      let newBet = {
+        teamId: this.matchForm.get('teamId').value,
+        home: this.matchForm.get('home').value,
+        away: this.matchForm.get('away').value,
+        date: this.matchForm.get('date').value,
+        odd: +this.matchForm.get('odd').value,
+        stake: +this.matchForm.get('stake').value
+      };
+
+      this.betService.addBet(newBet)
         .subscribe( next => {
           this.snackBarService.snackBarMessage(next['message'], 'Ok', 'confirm');
           this.router.navigate(['/home']);

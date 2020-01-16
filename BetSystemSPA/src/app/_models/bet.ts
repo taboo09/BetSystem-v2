@@ -6,7 +6,7 @@ export interface bet{
     home: string;
     away: string;
     date: Date;
-    date_text: string;
+    // date_text: string;
     odd: number;
     stake: number;
     cashReturn: number;

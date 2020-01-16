@@ -18,7 +18,7 @@ import { currency } from '../_models/currency';
 })
 export class TeamModalComponent implements OnInit {
   message: string = 'init';
-  colorSlide = 'primary';
+  colorSlide = 'accent';
   checkedSlide = 'false';
   disabledSlide = 'false';
   rgbColors = ['255, 99, 132', '54, 162, 235', '255, 206, 86', '75, 192, 192', '255, 65, 54', '153, 102, 255', '255, 159, 64', '46, 204, 64'];
