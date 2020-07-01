@@ -11,7 +11,7 @@ namespace BetSystem.API.DTOs
         public string Home { get; set; }
         public string Away { get; set; }
         public DateTime Date { get; set; }
-        // public string Date_Text { get; set; }
+        public string Date_Text { get; set; }
         public double Odd { get; set ; }
         public double Stake { get; set; }
         public double CashReturn { get; set; } 

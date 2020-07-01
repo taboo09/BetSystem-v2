@@ -30,6 +30,9 @@ namespace BetSystem.API.Controllers
         {
             var bet = _mapper.Map<Bet>(betDto);
 
+            // getting date from string to avoid GMT parsing
+            bet.Date = DateTime.Parse(betDto.Date_Text);
+
             bet.CashReturn = Math.Round(bet.Odd * bet.Stake, 2);
 
             if (await _betRepository.AddBet(bet))
