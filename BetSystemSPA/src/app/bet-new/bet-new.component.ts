@@ -69,14 +69,14 @@ export class BetNewComponent implements OnInit, AfterViewInit {
         date: this.matchForm.get('date').value,
         odd: +this.matchForm.get('odd').value,
         stake: +this.matchForm.get('stake').value,
-        date_text: ''
+        date_Text: ''
       };
 
       // option 1
       newBet.date = new Date(newBet.date.setHours(12,0,0,0));
 
       // option 2
-      newBet.date_text = `${newBet.date.getDate()}/${newBet.date.getMonth() + 1}/${newBet.date.getFullYear()}`;
+      newBet.date_Text = `${newBet.date.getDate()}/${newBet.date.getMonth() + 1}/${newBet.date.getFullYear()}`;
 
       this.betService.addBet(newBet)
         .subscribe( next => {
